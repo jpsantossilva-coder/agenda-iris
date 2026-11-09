@@ -80,6 +80,6 @@ export function makeHandler({ db, push, secret }: { db: Db; push: Push; secret: 
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const { makeRealDeps } = await import('./lib/real')
-  return makeHandler(makeRealDeps())(req, res)
+  const { makeRealDeps } = await import('./lib/real.js')
+  return makeHandler(await makeRealDeps())(req, res)
 }

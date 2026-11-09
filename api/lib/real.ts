@@ -1,6 +1,5 @@
 // Ligações de verdade (Supabase com chave de serviço e web-push). Só roda no servidor.
 import { createClient } from '@supabase/supabase-js'
-import { sendNotification, setVapidDetails } from 'web-push'
 import { DEFAULT_SETTINGS, type Settings } from '../../src/data/repos'
 import { taskFromRow, type Row } from '../../src/data/rows'
 import type { Db, Push, PushSub } from '../send-reminders'
@@ -11,7 +10,9 @@ function need(name: string): string {
   return v
 }
 
-export function makeRealDeps(): { db: Db; push: Push; secret: string } {
+export async function makeRealDeps(): Promise<{ db: Db; push: Push; secret: string }> {
+  // web-push é um módulo ES: no servidor (CommonJS) só carrega com import() dinâmico.
+  const { sendNotification, setVapidDetails } = await import('web-push')
   const supabase = createClient(need('SUPABASE_URL'), need('SUPABASE_SERVICE_ROLE_KEY'), {
     auth: { persistSession: false },
   })
