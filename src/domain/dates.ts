@@ -22,6 +22,18 @@ export function weekdayOf(date: string): number {
 export const WEEKDAY_LONG = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado']
 export const WEEKDAY_SHORT = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb']
 
+export const MONTH_LONG = [
+  'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+  'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro',
+]
+
+/** 42 dias (6 semanas, segunda a domingo) que cobrem o mês da data. */
+export function monthGrid(date: string): string[] {
+  const first = `${date.slice(0, 7)}-01`
+  const start = weekOf(first)[0]
+  return Array.from({ length: 42 }, (_, i) => addDays(start, i))
+}
+
 /** Segunda a domingo da semana que contém a data. */
 export function weekOf(date: string): string[] {
   const monday = addDays(date, -((weekdayOf(date) + 6) % 7))

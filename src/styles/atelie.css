@@ -204,3 +204,17 @@ h1 { font-family: Georgia, serif; font-size: 24px; margin: 0 0 4px; }
   display: flex; gap: 14px; align-items: center; padding: 10px 16px; border-radius: 22px; background: var(--marrom); color: var(--linho); font-size: 14px;
 }
 .undo-toast button { background: none; border: 0; color: var(--fita); font: inherit; font-weight: 700; text-decoration: underline; }
+
+/* Agenda: calendário do mês */
+.mes-nav { display: flex; align-items: center; justify-content: space-between; margin: 6px 0; }
+.mes-nav h2 { font-family: Georgia, serif; font-size: 17px; margin: 0; text-transform: capitalize; font-weight: 400; }
+.mes-nav button { width: 36px; height: 36px; border: 0; background: none; color: var(--marrom); font-size: 22px; }
+.mes { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; background: var(--papel); border: 1.5px dashed #b9a27f; border-radius: 14px; padding: 8px; }
+.mes-cab { text-align: center; font-size: 10px; opacity: 0.6; }
+.mes-dia { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 5px 0 3px; border: 0; border-radius: 10px; background: none; color: inherit; font: inherit; font-size: 13px; }
+.mes-dia.fora { opacity: 0.35; }
+.mes-dia.hoje { font-weight: 700; color: var(--terracota-forte); }
+.mes-dia.sel { background: #e3f2f0; box-shadow: inset 0 0 0 1.5px var(--verde); }
+.pontos { display: flex; gap: 2px; height: 6px; }
+.ponto { display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--area, var(--terracota)); }
+.dia-titulo { font-family: Georgia, serif; font-weight: 400; font-size: 16px; margin: 16px 0 6px; }

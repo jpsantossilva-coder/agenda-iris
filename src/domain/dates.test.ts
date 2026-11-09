@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { addDays, diffDays, localToUtc, utcToLocal, weekOf, greetingFor } from './dates'
+import { addDays, diffDays, localToUtc, utcToLocal, weekOf, greetingFor, monthGrid } from './dates'
 
 describe('dates', () => {
   it('weekOf devolve segunda a domingo da semana da data', () => {
@@ -8,6 +8,13 @@ describe('dates', () => {
     ])
     expect(weekOf('2026-11-15')[0]).toBe('2026-11-09')
     expect(weekOf('2026-11-09')[0]).toBe('2026-11-09')
+  })
+  it('monthGrid devolve 42 dias começando na segunda anterior ao dia 1', () => {
+    const g = monthGrid('2026-11-15')
+    expect(g).toHaveLength(42)
+    expect(g[0]).toBe('2026-10-26')
+    expect(g).toContain('2026-11-30')
+    expect(g[41]).toBe('2026-12-06')
   })
   it('addDays e diffDays atravessam o fim do mês', () => {
     expect(addDays('2026-11-30', 2)).toBe('2026-12-02')

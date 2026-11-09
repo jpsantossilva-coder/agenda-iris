@@ -10,14 +10,15 @@ const AVISO = 'Evite colocar CPF, salário ou dados de saúde de colegas.'
 type Touched = Partial<Record<keyof FormValues, boolean>>
 
 /** Anotar em 2 toques: abrir, digitar, Salvar. Data e área vêm do texto; o resto é opcional. */
-export default function QuickAdd({ onSaved }: { onSaved: () => void }) {
+export default function QuickAdd({ onSaved, initialDate }: { onSaved: () => void; initialDate?: string }) {
   const repos = useRepos()
   const today = useToday()
   const [tipo, setTipo] = useState<'atividade' | 'anotacao'>('atividade')
   const [detalhes, setDetalhes] = useState(false)
-  const [touched, setTouched] = useState<Touched>({})
+  // Quando a pessoa já escolheu um dia (ex.: tocou no calendário), a data vem dele e não do texto.
+  const [touched, setTouched] = useState<Touched>(initialDate ? { date: true } : {})
   const [v, setV] = useState<FormValues>({
-    title: '', area: 'trabalho', date: today, time: '', estimate: '', remind: '15', repeat: 'none',
+    title: '', area: 'trabalho', date: initialDate ?? today, time: '', estimate: '', remind: '15', repeat: 'none',
   })
   const [busy, setBusy] = useState(false)
 
