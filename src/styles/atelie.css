@@ -1,0 +1,120 @@
+/* Visual "Ateliê": linho, etiquetas de tecido, botões de costura. Base: docs/superpowers/specs/mockups/mistura-home-office.html */
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+  background-color: var(--linho);
+  background-image: repeating-linear-gradient(45deg, #0000 0 3px, #00000008 3px 4px);
+}
+.app-main {
+  padding: calc(20px + env(safe-area-inset-top)) 16px calc(100px + env(safe-area-inset-bottom));
+}
+h1 { font-family: Georgia, serif; font-size: 24px; margin: 0 0 4px; }
+
+/* Botão de costura */
+.botao {
+  display: inline-block;
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, #f5ede0, #d9c9ad);
+  box-shadow: inset 0 0 0 2px #c9b58f, 0 1px 2px #0004;
+}
+.botao::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--marrom);
+  box-shadow: 7px 0 var(--marrom), 0 7px var(--marrom), 7px 7px var(--marrom);
+}
+.botao.grande {
+  width: 48px;
+  height: 48px;
+  margin-top: -28px;
+  background: radial-gradient(circle at 38% 38%, #e08a4e, var(--terracota-forte));
+  box-shadow: inset 0 0 0 3px #f3b385, 0 3px 6px #0006;
+  color: #fff;
+  font-size: 28px;
+  line-height: 48px;
+  text-align: center;
+}
+.botao.grande::before { display: none; }
+
+/* Barra de baixo com borda serrilhada */
+.bottom-bar {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100%;
+  max-width: 480px;
+  box-sizing: border-box;
+  height: calc(72px + env(safe-area-inset-bottom));
+  padding: 12px 4px env(safe-area-inset-bottom);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: var(--marrom);
+  color: var(--linho);
+  font-size: 11px;
+  clip-path: polygon(0 12px, 4% 0, 8% 12px, 12% 0, 16% 12px, 20% 0, 24% 12px, 28% 0, 32% 12px, 36% 0, 40% 12px, 44% 0, 48% 12px, 52% 0, 56% 12px, 60% 0, 64% 12px, 68% 0, 72% 12px, 76% 0, 80% 12px, 84% 0, 88% 12px, 92% 0, 96% 12px, 100% 0, 100% 100%, 0 100%);
+}
+.bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 56px;
+  padding: 0;
+  color: inherit;
+  background: none;
+  border: 0;
+  font: inherit;
+  text-decoration: none;
+}
+.bar-item.on .botao {
+  background: radial-gradient(circle at 38% 38%, #7fc4bd, var(--verde));
+  box-shadow: inset 0 0 0 2px #a9ddd7;
+}
+
+/* Folha que sobe do "+" */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: #0006;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 10;
+}
+.sheet {
+  width: 100%;
+  max-width: 480px;
+  box-sizing: border-box;
+  background: var(--papel);
+  border-radius: 22px 22px 0 0;
+  padding: 14px 16px calc(20px + env(safe-area-inset-bottom));
+  box-shadow: 0 -6px 16px #0004;
+  max-height: 90dvh;
+  overflow-y: auto;
+}
+.sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: #cdbb9c; margin: 0 auto 8px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.sheet-head h2 { font-family: Georgia, serif; font-size: 18px; margin: 0; }
+.sheet-close { background: none; border: 0; color: var(--marrom); font-size: 14px; text-decoration: underline; }
+.sheet-options { display: grid; gap: 10px; }
+.sheet-option {
+  padding: 14px;
+  border-radius: 14px;
+  border: 1.5px dashed #b9a27f;
+  background: #fff;
+  color: var(--marrom);
+  font-size: 16px;
+  text-align: left;
+}
