@@ -128,6 +128,15 @@ describe('HojeScreen', () => {
     expect(screen.queryByText('outra data')).not.toBeInTheDocument()
   })
 
+  it('o ciclo de novembro continua valendo no começo de dezembro', async () => {
+    const repos = makeMemoryRepos()
+    await repos.closing.save({ month: '2026-11', steps: [{ id: 'v', label: 'Virada', date: '2026-12-02' }] })
+    render(
+      <MemoryRouter><ClockProvider now={() => new Date('2026-12-01T11:00:00Z')}><RepoProvider repos={repos}><HojeScreen /></RepoProvider></ClockProvider></MemoryRouter>,
+    )
+    expect(await screen.findByText('Fechamento: falta 1 dia · Virada')).toBeInTheDocument()
+  })
+
   it('mostra a contagem do fechamento de folha', async () => {
     const repos = makeMemoryRepos()
     await repos.closing.save({ month: '2026-11', steps: [{ id: 'a', label: 'Lançar atestados', date: '2026-11-12' }] })

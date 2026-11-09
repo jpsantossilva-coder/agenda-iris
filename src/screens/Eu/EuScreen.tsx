@@ -1,3 +1,12 @@
+import { useToday } from '../../app/context'
+import FechamentoEditor from './FechamentoEditor'
+
 export default function EuScreen() {
-  return <h1>Eu</h1>
+  const today = useToday()
+  return (
+    <section>
+      <h1>Eu</h1>
+      <FechamentoEditor month={today.slice(0, 7)} />
+    </section>
+  )
 }
