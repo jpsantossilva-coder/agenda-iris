@@ -1,0 +1,117 @@
+/* A gatinha cavaleira no cantinho: em pé em cima da barra de baixo, com o balão em forma de etiqueta de molde. */
+
+.mascote {
+  position: fixed; right: max(20px, calc(50% - 220px)); bottom: calc(70px + env(safe-area-inset-bottom)); z-index: 6;
+  display: flex; align-items: flex-end; gap: 4px; pointer-events: none;
+}
+.mascote-gata {
+  display: block; padding: 0; border: 0; background: none; border-radius: 12px; cursor: pointer; pointer-events: auto;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.gata-em-pe, .gata-deitada { position: relative; display: block; }
+.gata-em-pe[hidden], .gata-deitada[hidden] { display: none; }
+.gata-move, .gata-corpo { position: absolute; inset: 0; display: block; transform-origin: 50% 100%; }
+.mascote-gata img { position: absolute; max-width: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+
+/* as poses ficam empilhadas; só a da vez aparece (troca sem piscar, porque todas já estão carregadas) */
+.gata-pose { opacity: 0; transition: opacity 0.14s; }
+.gata-pose.on { opacity: 1; }
+
+/* respirar devagar, com um balanço mínimo */
+.gata-em-pe .gata-corpo { animation: gata-respira 4.8s ease-in-out infinite; }
+.gata-deitada .gata-corpo { animation: gata-ressona 6s ease-in-out infinite; }
+@keyframes gata-respira {
+  0%, 100% { transform: scale(1, 1) rotate(-0.35deg); }
+  50% { transform: scale(0.994, 1.014) rotate(0.35deg); }
+}
+@keyframes gata-ressona {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.006, 1.03); }
+}
+
+/* piscar: só os olhos da pose de olhos fechados, por cima da pose parada */
+.gata-piscada {
+  opacity: 0;
+  -webkit-mask-image: radial-gradient(ellipse 13% 4.5% at 47.5% 40.3%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 13% 4.5% at 47.5% 40.3%, #000 55%, transparent 100%);
+}
+[data-humor='parada'] .gata-piscada { animation: gata-pisca 5.6s linear infinite; }
+@keyframes gata-pisca {
+  0%, 93.5%, 97.5%, 100% { opacity: 0; }
+  94.5%, 96.5% { opacity: 1; }
+}
+
+/* brilho correndo pela lâmina, da guarda até a ponta */
+.gata-brilho {
+  position: absolute; left: 0; top: 0; width: 14px; height: 14px; opacity: 0; fill: #fff; pointer-events: none;
+  filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 1px #5b78b4);
+}
+[data-humor='parada'] .gata-brilho, [data-humor='vitoria'] .gata-brilho { animation: gata-brilha 6.4s ease-in-out 1.2s infinite; }
+@keyframes gata-brilha {
+  0% { opacity: 0; transform: translate(var(--x0), var(--y0)) scale(0.3) rotate(0deg); }
+  5% { opacity: 1; transform: translate(calc(var(--x0) * 0.75 + var(--x1) * 0.25), calc(var(--y0) * 0.75 + var(--y1) * 0.25)) scale(1) rotate(22deg); }
+  16% { opacity: 1; transform: translate(calc(var(--x0) * 0.25 + var(--x1) * 0.75), calc(var(--y0) * 0.25 + var(--y1) * 0.75)) scale(0.9) rotate(68deg); }
+  22%, 100% { opacity: 0; transform: translate(var(--x1), var(--y1)) scale(0.3) rotate(90deg); }
+}
+
+/* reações */
+[data-humor='pulo'] .gata-move { animation: gata-pula 0.6s; }
+[data-humor='oi'] .gata-move { animation: gata-acena 1.3s 0.2s; }
+[data-humor='acorda'] .gata-move, [data-humor='vitoria'] .gata-move { animation: gata-levanta 0.5s; }
+@keyframes gata-pula {
+  0%, 100% { transform: translateY(0); animation-timing-function: ease-out; }
+  42% { transform: translateY(-22px); animation-timing-function: ease-in; }
+}
+@keyframes gata-acena {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-3deg); }
+  50% { transform: rotate(2.5deg); }
+  75% { transform: rotate(-2deg); }
+}
+@keyframes gata-levanta {
+  0% { transform: translateY(6px) scale(0.94); }
+  55% { transform: translateY(-8px) scale(1.04); }
+  100% { transform: none; }
+}
+
+/* z z z do sono */
+.gata-zzz { position: absolute; left: 26%; top: -18%; font-family: var(--fonte-mao); font-weight: 700; color: var(--area-descanso); }
+.gata-zzz i { position: absolute; font-style: normal; opacity: 0; animation: gata-zzz 4.5s ease-out infinite; }
+.gata-zzz i:nth-child(1) { font-size: 16px; }
+.gata-zzz i:nth-child(2) { font-size: 21px; animation-delay: 1.5s; }
+.gata-zzz i:nth-child(3) { font-size: 27px; animation-delay: 3s; }
+@keyframes gata-zzz {
+  0% { opacity: 0; transform: translate(0, 0) rotate(-6deg); }
+  20% { opacity: 0.9; }
+  100% { opacity: 0; transform: translate(26px, -40px) rotate(8deg); }
+}
+
+/* balão: etiqueta de molde puxada pela linha */
+.mascote-balao {
+  position: relative; max-width: 168px; margin: 0 0 49px; color: var(--tinta); transform: rotate(-2deg); transform-origin: 100% 100%;
+  filter: drop-shadow(1px 2px 0 #1f2d5722); animation: balao-puxa 0.42s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.mascote-papel {
+  --corte: polygon(0 7px, 7px 0, calc(100% - 11px) 0, 100% 11px, 100% calc(100% - 7px), calc(100% - 7px) 100%, 8px 100%, 0 calc(100% - 8px));
+  position: relative; display: block; padding: 9px 14px 9px 13px; background: var(--papel-claro); clip-path: var(--corte);
+  font-size: 13.5px; font-weight: 700; line-height: 1.2;
+}
+.mascote-papel::before { content: ''; position: absolute; inset: 3px; border: 1.5px dashed var(--tinta-suave); clip-path: var(--corte); }
+.mascote-linha { position: absolute; right: -22px; bottom: -20px; width: 30px; height: 24px; overflow: visible; }
+.mascote-linha path { fill: none; stroke: var(--giz); stroke-width: 1.6; stroke-dasharray: 4 3; stroke-linecap: round; }
+@keyframes balao-puxa {
+  0% { opacity: 0; transform: translateX(34px) rotate(7deg); }
+  100% { opacity: 1; transform: rotate(-2deg); }
+}
+
+/* "Reduzir movimento": ela continua trocando de pose e falando, mas nada se mexe */
+.sem-movimento, .sem-movimento * { animation: none !important; transition: none !important; }
+.sem-movimento .gata-zzz i { opacity: 0.8; }
+.sem-movimento .gata-zzz i:nth-child(2) { transform: translate(12px, -16px); }
+.sem-movimento .gata-zzz i:nth-child(3) { transform: translate(26px, -36px); }
+@media (prefers-reduced-motion: reduce) {
+  .mascote, .mascote * { animation: none !important; transition: none !important; }
+  .gata-zzz i { opacity: 0.8; }
+  .gata-zzz i:nth-child(2) { transform: translate(12px, -16px); }
+  .gata-zzz i:nth-child(3) { transform: translate(26px, -36px); }
+}

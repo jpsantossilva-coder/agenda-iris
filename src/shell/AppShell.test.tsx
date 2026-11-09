@@ -54,6 +54,23 @@ describe('AppShell', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
+  it('salvar uma atividade faz a mascote dizer "Tudo certo, agendado!"', async () => {
+    renderShell()
+    await userEvent.click(screen.getByRole('button', { name: 'Novo' }))
+    await userEvent.keyboard('ligar pro contador')
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
+    expect(await screen.findByText('Tudo certo, agendado!')).toBeInTheDocument()
+  })
+
+  it('salvar uma anotação rápida faz a mascote dizer "Anotado!"', async () => {
+    renderShell()
+    await userEvent.click(screen.getByRole('button', { name: 'Novo' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Anotação rápida' }))
+    await userEvent.type(screen.getByRole('textbox'), 'comprar linha')
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
+    expect(await screen.findByText('Anotado!')).toBeInTheDocument()
+  })
+
   it('fechar a folha a esconde', async () => {
     renderShell()
     await userEvent.click(screen.getByRole('button', { name: 'Novo' }))

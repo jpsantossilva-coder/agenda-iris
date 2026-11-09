@@ -9,6 +9,7 @@ import { useUndo } from '../../components/UndoToast'
 import Etiqueta from '../../components/Etiqueta'
 import Sheet from '../../shell/Sheet'
 import ScissorsCut from '../../motion/ScissorsCut'
+import { avisarMascote } from '../../mascote/eventos'
 import NotasLista from './NotasLista'
 import TaskEditor from './TaskEditor'
 import { useTasks } from './useTasks'
@@ -35,7 +36,8 @@ export default function TarefasScreen() {
   const feitas = found.filter(concluida)
 
   async function concluir(t: Task) {
-    await toggleDone(repos.tasks, t, today, now())
+    const updated = await toggleDone(repos.tasks, t, today, now())
+    if (isDoneOn(updated, today)) avisarMascote('concluiu')
     await reload()
   }
   const stopCutting = (id: string) =>

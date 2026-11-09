@@ -8,6 +8,7 @@ import { utcToLocal } from '../../domain/dates'
 import { ClockProvider, RepoProvider } from '../../app/context'
 import { makeMemoryRepos } from '../../data/memoryRepos'
 import type { NewTask } from '../../data/repos'
+import { ouvirMascote, type EventoMascote } from '../../mascote/eventos'
 
 const TERCA_8H = new Date('2026-11-10T11:00:00Z') // 08:00 em Brasília
 const TERCA_13H = new Date('2026-11-10T16:00:00Z')
@@ -190,6 +191,25 @@ describe('HojeScreen', () => {
     expect(screen.queryByText('Dia fechado! ♡')).not.toBeInTheDocument()
     await userEvent.click(await screen.findByRole('button', { name: 'Concluir B' }))
     expect(await screen.findByText('Dia fechado! ♡')).toBeInTheDocument()
+  })
+
+  it('avisa a mascote a cada tarefa concluída e quando o dia fecha', async () => {
+    const vistos: EventoMascote[] = []
+    const parar = ouvirMascote((e) => vistos.push(e))
+    const repos = makeMemoryRepos()
+    await repos.tasks.create({ ...base, title: 'A', time: '09:00' })
+    await repos.tasks.create({ ...base, title: 'B', time: '10:00' })
+    render(
+      <MemoryRouter><ClockProvider now={() => TERCA_8H}><RepoProvider repos={repos}><HojeScreen /></RepoProvider></ClockProvider></MemoryRouter>,
+    )
+    await userEvent.click(await screen.findByRole('button', { name: 'Concluir A' }))
+    await waitFor(() => expect(vistos).toEqual(['concluiu']))
+    await userEvent.click(await screen.findByRole('button', { name: 'Concluir B' }))
+    await waitFor(() => expect(vistos).toEqual(['concluiu', 'fechou-o-dia']))
+    await userEvent.click(await screen.findByRole('button', { name: 'Reabrir B' }))
+    await screen.findByRole('button', { name: 'Concluir B' })
+    expect(vistos).toHaveLength(2)
+    parar()
   })
 
   it('dar baixa num post-it bate o carimbo, tira a nota e oferece Desfazer', async () => {

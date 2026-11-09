@@ -12,6 +12,7 @@ import PostIt from '../../components/PostIt'
 import WeekStrip from '../../components/WeekStrip'
 import { useUndo } from '../../components/UndoToast'
 import ButtonRain from '../../motion/ButtonRain'
+import { avisarMascote } from '../../mascote/eventos'
 import { useDayData } from './hooks'
 
 const FRESH_MS = 3000
@@ -48,7 +49,9 @@ export default function HojeScreen() {
     const updated = await toggleDone(repos.tasks, t, today, now())
     const concluida = isDoneOn(updated, today)
     if (concluida) setStriking((s) => new Set(s).add(t.id))
-    if (concluida && allDoneOn(tasks.map((x) => (x.id === updated.id ? updated : x)), today)) setRain(true)
+    const fechouODia = concluida && allDoneOn(tasks.map((x) => (x.id === updated.id ? updated : x)), today)
+    if (fechouODia) setRain(true)
+    if (concluida) avisarMascote(fechouODia ? 'fechou-o-dia' : 'concluiu')
     await reload()
   }
 

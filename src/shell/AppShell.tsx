@@ -8,6 +8,7 @@ import TarefasScreen from '../screens/Tarefas/TarefasScreen'
 import EuScreen from '../screens/Eu/EuScreen'
 import QuickAdd from '../screens/Tarefas/QuickAdd'
 import NeedleSewing from '../motion/NeedleSewing'
+import Mascote from '../mascote/Mascote'
 import '../styles/atelie.css'
 
 export default function AppShell() {
@@ -26,6 +27,7 @@ export default function AppShell() {
           <Route path="/eu" element={<EuScreen />} />
         </Routes>
       </main>
+      <Mascote />
       <BottomBar
         onNovo={() => {
           setNovo(true)

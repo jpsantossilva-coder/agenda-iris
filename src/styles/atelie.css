@@ -18,7 +18,7 @@
   pointer-events: none;
 }
 .app-main {
-  padding: calc(22px + env(safe-area-inset-top)) 18px calc(110px + env(safe-area-inset-bottom)) 30px;
+  padding: calc(22px + env(safe-area-inset-top)) 18px calc(184px + env(safe-area-inset-bottom)) 30px; /* folga embaixo para rolar o fim da lista acima da mascote */
 }
 
 h1 { font-size: 32px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 12px; }
@@ -167,6 +167,12 @@ h3 { font-size: 17px; font-weight: 700; margin: 0; }
   outline: 2px solid var(--giz); outline-offset: 1px; border-color: var(--tinta);
 }
 .campos { display: grid; gap: 12px; }
+/* iPhone: campos de data e hora têm largura própria e vazavam da tela; aqui passam a obedecer a folha. */
+.quick-add, .campos, .quick-add label, .campos label { min-width: 0; }
+.quick-add input[type='date'], .quick-add input[type='time'], .campos input[type='date'], .campos input[type='time'] {
+  -webkit-appearance: none; appearance: none; display: block; min-width: 0; max-width: 100%; min-height: 46px;
+}
+input[type='date']::-webkit-date-and-time-value, input[type='time']::-webkit-date-and-time-value { text-align: left; }
 .aviso-sensivel { margin: 0; font-size: 12px; opacity: 0.7; }
 .sugestao { margin: 0; display: flex; gap: 8px; flex-wrap: wrap; font-size: 12.5px; }
 .sugestao span { padding: 3px 11px; border-radius: 999px; border: 1.5px dashed var(--giz); background: #fff; }
@@ -182,7 +188,7 @@ h3 { font-size: 17px; font-weight: 700; margin: 0; }
 
 /* ---------- avisos rápidos ---------- */
 .undo-toast {
-  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(88px + env(safe-area-inset-bottom)); z-index: 20;
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(176px + env(safe-area-inset-bottom)); z-index: 20; /* acima da mascote, que fica no canto sobre a barra */
   display: flex; gap: 14px; align-items: center; padding: 10px 18px; border-radius: 999px; background: var(--tinta); color: var(--papel); font-size: 14px;
 }
 .undo-toast button { background: none; border: 0; color: var(--post-it); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }

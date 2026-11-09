@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useRepos, useToday } from '../../app/context'
 import { suggestFromText } from '../../domain/suggest'
 import type { Area } from '../../domain/types'
+import { avisarMascote } from '../../mascote/eventos'
 import TaskFields, { toNewTask, type FormValues } from './TaskFields'
 
 const POSTIT = '#fff3a8'
@@ -45,6 +46,7 @@ export default function QuickAdd({ onSaved, initialDate }: { onSaved: () => void
         await repos.tasks.create(input)
       }
       onSaved()
+      avisarMascote(tipo === 'anotacao' ? 'anotou' : 'agendou')
     } finally {
       setBusy(false)
     }

@@ -4,3 +4,10 @@ node_modules/
 dist/
 dev-dist/
 *.log
+
+# fotos de referencia da mascote (nao subir)
+dev/referencias/
+
+# fotos grandes da mascote (originais e recortes); o app usa as reduzidas em src/mascote/img
+dev/mascote/*.png
+dev/mascote/recorte/
