@@ -72,7 +72,9 @@ describe('TarefasScreen', () => {
     renderApp(<TarefasScreen />, { repos })
     fireEvent.click(await screen.findByRole('button', { name: 'Excluir Apagar' }))
     const desfazer = await screen.findByRole('button', { name: 'Desfazer' })
-    expect(screen.queryByText('Apagar')).not.toBeInTheDocument()
+    // A tesoura corta primeiro: a etiqueta só some depois do corte, mas o Desfazer já está lá.
+    expect(screen.getByText('Apagar')).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByText('Apagar')).not.toBeInTheDocument(), { timeout: 2500 })
     fireEvent.click(desfazer)
     expect(await screen.findByText('Apagar')).toBeInTheDocument()
     expect(await repos.tasks.list()).toHaveLength(1)

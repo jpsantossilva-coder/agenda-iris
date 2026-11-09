@@ -30,6 +30,7 @@ export default function AgendaScreen() {
   const [modes, setModes] = useState<Record<string, DayMode>>({})
   const [modeDay, setModeDay] = useState<string | null>(null)
   const [adding, setAdding] = useState(false)
+  const [bounce, setBounce] = useState<string | undefined>()
 
   const load = useCallback(async () => {
     const grid = monthGrid(month)
@@ -49,6 +50,7 @@ export default function AgendaScreen() {
 
   async function setMode(date: string, mode: DayMode) {
     await repos.dayModes.set(date, mode)
+    if (mode === 'home') setBounce(date)
     setModeDay(null)
     await load()
   }
@@ -59,7 +61,7 @@ export default function AgendaScreen() {
   return (
     <section>
       <h1>Agenda</h1>
-      <WeekStrip days={weekOf(selected)} today={today} modes={modes} onPick={(d) => setModeDay(d)} />
+      <WeekStrip days={weekOf(selected)} today={today} modes={modes} onPick={(d) => setModeDay(d)} bounceDay={bounce} onBounceEnd={() => setBounce(undefined)} />
 
       <div className="mes-nav">
         <button type="button" aria-label="Mês anterior" onClick={() => setMonth(shiftMonth(monthDate, -1))}>‹</button>

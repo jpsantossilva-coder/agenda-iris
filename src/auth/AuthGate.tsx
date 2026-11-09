@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import LoginScreen from './LoginScreen'
+import SplashLoader from '../motion/SplashLoader'
 
 export interface AuthPort {
   getSession(): Promise<boolean>
@@ -21,7 +22,7 @@ export default function AuthGate({ port, children }: { port: AuthPort; children:
     }
   }, [port])
 
-  if (state === 'loading') return <p style={{ padding: 24 }}>Carregando…</p>
+  if (state === 'loading') return <SplashLoader />
   if (state === 'out') return <LoginScreen onSignIn={port.signIn} />
   return <>{children}</>
 }

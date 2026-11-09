@@ -1,8 +1,10 @@
 import { render, screen, within, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, afterEach } from 'vitest'
+import { clearMatchMedia, mockReducedMotion } from '../../test/motion'
 import HojeScreen from './HojeScreen'
+import { utcToLocal } from '../../domain/dates'
 import { ClockProvider, RepoProvider } from '../../app/context'
 import { makeMemoryRepos } from '../../data/memoryRepos'
 import type { NewTask } from '../../data/repos'
@@ -28,6 +30,8 @@ function setup(now = TERCA_8H) {
   )
   return repos
 }
+
+afterEach(() => clearMatchMedia())
 
 describe('HojeScreen', () => {
   it('cumprimenta pelo nome e pelo horário', async () => {
@@ -144,5 +148,58 @@ describe('HojeScreen', () => {
       <MemoryRouter><ClockProvider now={() => TERCA_8H}><RepoProvider repos={repos}><HojeScreen /></RepoProvider></ClockProvider></MemoryRouter>,
     )
     expect(await screen.findByText('Fechamento: faltam 2 dias · Lançar atestados')).toBeInTheDocument()
+  })
+
+  it('concluir na Hoje risca a tarefa com a caneta', async () => {
+    const repos = makeMemoryRepos()
+    await repos.tasks.create({ ...base, title: 'A', time: '09:00' })
+    await repos.tasks.create({ ...base, title: 'B', time: '10:00' })
+    render(
+      <MemoryRouter><ClockProvider now={() => TERCA_8H}><RepoProvider repos={repos}><HojeScreen /></RepoProvider></ClockProvider></MemoryRouter>,
+    )
+    await userEvent.click(await screen.findByRole('button', { name: 'Concluir A' }))
+    await waitFor(async () => expect((await repos.tasks.list()).find((t) => t.title === 'A')?.doneAt).not.toBeNull())
+    expect(screen.getByText('A').closest('.mi-strike')).toHaveClass('go')
+    expect(screen.queryByText('Dia fechado! ♡')).not.toBeInTheDocument()
+  })
+
+  it('só a última tarefa do dia dispara a chuva de botões', async () => {
+    const repos = makeMemoryRepos()
+    await repos.tasks.create({ ...base, title: 'A', time: '09:00' })
+    await repos.tasks.create({ ...base, title: 'B', time: '10:00' })
+    render(
+      <MemoryRouter><ClockProvider now={() => TERCA_8H}><RepoProvider repos={repos}><HojeScreen /></RepoProvider></ClockProvider></MemoryRouter>,
+    )
+    await userEvent.click(await screen.findByRole('button', { name: 'Concluir A' }))
+    await waitFor(async () => expect((await repos.tasks.list()).find((t) => t.title === 'A')?.doneAt).not.toBeNull())
+    expect(screen.queryByText('Dia fechado! ♡')).not.toBeInTheDocument()
+    await userEvent.click(await screen.findByRole('button', { name: 'Concluir B' }))
+    expect(await screen.findByText('Dia fechado! ♡')).toBeInTheDocument()
+  })
+
+  it('dar baixa num post-it bate o carimbo, tira a nota e oferece Desfazer', async () => {
+    mockReducedMotion(true)
+    const repos = makeMemoryRepos()
+    await repos.notes.create({ text: 'ligar pro contador', color: '#fff3a8', date: '2026-11-10' })
+    render(
+      <MemoryRouter><ClockProvider now={() => TERCA_8H}><RepoProvider repos={repos}><HojeScreen /></RepoProvider></ClockProvider></MemoryRouter>,
+    )
+    await userEvent.click(await screen.findByRole('button', { name: 'Dar baixa em ligar pro contador' }))
+    await waitFor(async () => expect(await repos.notes.list()).toHaveLength(0))
+    await userEvent.click(await screen.findByRole('button', { name: 'Desfazer' }))
+    await waitFor(async () => expect(await repos.notes.list()).toHaveLength(1))
+  })
+
+  it('post-it recém criado cai na tela; os antigos já aparecem parados', async () => {
+    const hoje = utcToLocal(new Date()).date
+    const repos = makeMemoryRepos()
+    const velho = await repos.notes.create({ text: 'velho', color: '#fff3a8', date: hoje })
+    await repos.notes.update(velho.id, { createdAt: '2026-01-01T10:00:00Z' })
+    await repos.notes.create({ text: 'novo', color: '#fff3a8', date: hoje })
+    render(
+      <MemoryRouter><ClockProvider now={() => new Date()}><RepoProvider repos={repos}><HojeScreen /></RepoProvider></ClockProvider></MemoryRouter>,
+    )
+    expect((await screen.findByText('novo')).closest('.mi-drop')).toHaveClass('go')
+    expect(screen.getByText('velho').closest('.mi-drop')).not.toHaveClass('go')
   })
 })

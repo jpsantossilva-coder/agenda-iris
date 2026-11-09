@@ -40,6 +40,11 @@ describe('AuthGate', () => {
     expect(screen.queryByText(/criar conta/i)).not.toBeInTheDocument()
   })
 
+  it('enquanto confere a sessão mostra a tela de carregamento', () => {
+    render(<AuthGate port={{ ...fakePort(true), getSession: () => new Promise(() => {}) }}><p>conteúdo</p></AuthGate>)
+    expect(screen.getByText('Preparando seu dia…')).toBeInTheDocument()
+  })
+
   it('com sessão mostra os filhos', async () => {
     render(<AuthGate port={fakePort(true)}><p>conteúdo</p></AuthGate>)
     expect(await screen.findByText('conteúdo')).toBeInTheDocument()

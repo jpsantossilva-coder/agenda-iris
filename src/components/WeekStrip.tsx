@@ -1,16 +1,21 @@
 import { WEEKDAY_LONG, WEEKDAY_SHORT, weekdayOf } from '../domain/dates'
 import type { DayMode } from '../domain/types'
+import HomeBounce from '../motion/HomeBounce'
 
 export default function WeekStrip({
   days,
   today,
   modes,
   onPick,
+  bounceDay,
+  onBounceEnd,
 }: {
   days: string[]
   today: string
   modes: Record<string, DayMode>
   onPick: (date: string) => void
+  bounceDay?: string
+  onBounceEnd?: () => void
 }) {
   return (
     <div className="week" role="group" aria-label="Semana">
@@ -27,7 +32,9 @@ export default function WeekStrip({
             onClick={() => onPick(d)}
           >
             <small>{WEEKDAY_SHORT[wd]}</small>
-            <span className="botao-dia">{home ? '🏠' : n}</span>
+            <span className="botao-dia">
+              {home ? <HomeBounce play={bounceDay === d} onEnd={onBounceEnd}>🏠</HomeBounce> : n}
+            </span>
           </button>
         )
       })}

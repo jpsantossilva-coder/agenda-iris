@@ -1,0 +1,61 @@
+/* Microinterações. Origem das ideias: docs/superpowers/specs/mockups/microinteracoes.html */
+@keyframes mi-w { to { width: 100%; } }
+@keyframes mi-p { 0% { opacity: 1; left: 0; } 90% { opacity: 1; } 100% { opacity: 0; left: 100%; } }
+
+/* 1 · caneta riscando */
+.mi-strike { position: relative; display: inline-block; }
+.mi-strike-line { position: absolute; left: 0; top: 55%; height: 3px; width: 0; background: var(--verde); border-radius: 2px; }
+.mi-pen { position: absolute; left: 0; top: -10px; font-size: 18px; font-style: normal; opacity: 0; transform: rotate(20deg); }
+.mi-strike.go .mi-strike-line { animation: mi-w 0.7s ease-out forwards; }
+.mi-strike.go .mi-pen { animation: mi-p 0.7s ease-out forwards; }
+
+/* 2 · carimbo */
+.mi-stamp {
+  position: absolute; right: -8px; top: -12px; width: 44px; height: 44px; box-sizing: border-box; border: 3px solid #b5476b; border-radius: 50%;
+  color: #b5476b; font: 700 10px/38px system-ui; text-align: center; font-style: normal; opacity: 0.9; transform: rotate(-14deg);
+}
+.mi-stamp.go { opacity: 0; transform: scale(3) rotate(-30deg); animation: mi-stamp 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) forwards; }
+@keyframes mi-stamp { to { opacity: 0.9; transform: scale(1) rotate(-14deg); } }
+
+/* 3 · agulha costurando (no "+" e no carregamento) */
+.mi-sewing { position: fixed; left: 14px; right: 14px; bottom: calc(76px + env(safe-area-inset-bottom)); height: 0; z-index: 12; pointer-events: none; }
+.mi-sewing .mi-thread { position: absolute; left: 0; top: 0; height: 0; width: 0; border-top: 2px dashed var(--terracota); }
+.mi-sewing .mi-needle { position: absolute; left: 0; top: -12px; font-size: 18px; opacity: 0; }
+.mi-sewing.go .mi-thread { animation: mi-w 0.7s linear forwards; }
+.mi-sewing.go .mi-needle { animation: mi-p 0.7s linear forwards; }
+.mi-sewing.loop .mi-thread { animation: mi-w 1.6s linear infinite; }
+.mi-sewing.loop .mi-needle { animation: mi-p 1.6s linear infinite; }
+
+/* tela de carregamento */
+.splash { min-height: 100dvh; display: grid; place-content: center; justify-items: center; gap: 28px; background: var(--linho); color: var(--marrom); }
+.splash .mi-sewing { position: relative; left: auto; right: auto; bottom: auto; width: 180px; }
+.splash small { opacity: 0.7; }
+
+/* 4 · casinha pulando */
+.mi-home { display: inline-block; }
+.mi-home.go { animation: mi-bounce 0.7s; }
+@keyframes mi-bounce { 0% { transform: scale(1); } 30% { transform: translateY(-10px) scale(1.2); } 55% { transform: translateY(0) scale(0.95); } 75% { transform: translateY(-4px); } 100% { transform: none; } }
+
+/* 5 · post-it colando */
+.mi-drop { position: relative; }
+.mi-drop.go { animation: mi-drop 0.6s cubic-bezier(0.3, 1.5, 0.5, 1); }
+@keyframes mi-drop { 0% { opacity: 0; transform: translateY(-120px) rotate(-12deg); } 100% { opacity: 1; transform: none; } }
+
+/* 6 · chuva de botões */
+.mi-rain { position: fixed; inset: 0; z-index: 30; pointer-events: none; display: grid; place-content: center; text-align: center; font-family: Georgia, serif; font-size: 22px; color: var(--marrom); }
+.mi-fall {
+  position: absolute; top: -24px; width: 20px; height: 20px; border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, #f5ede0, #d9c9ad); box-shadow: inset 0 0 0 2px #c9b58f;
+  animation: mi-fall 1.3s ease-in forwards;
+}
+@keyframes mi-fall { to { transform: translateY(110vh) rotate(300deg); } }
+
+/* 7 · tesoura cortando */
+.mi-cut { position: relative; }
+.mi-cut.go { animation: mi-cut 0.4s 0.5s forwards; }
+.mi-scissors { position: absolute; left: 0; top: 30%; font-size: 18px; font-style: normal; animation: mi-p 0.5s linear forwards; }
+@keyframes mi-cut { to { transform: translate(-6px, 6px) rotate(-3deg); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  [class*='mi-'] { animation: none !important; }
+}

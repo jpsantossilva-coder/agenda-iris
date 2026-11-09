@@ -7,10 +7,12 @@ import AgendaScreen from '../screens/Agenda/AgendaScreen'
 import TarefasScreen from '../screens/Tarefas/TarefasScreen'
 import EuScreen from '../screens/Eu/EuScreen'
 import QuickAdd from '../screens/Tarefas/QuickAdd'
+import NeedleSewing from '../motion/NeedleSewing'
 import '../styles/atelie.css'
 
 export default function AppShell() {
   const [novo, setNovo] = useState(false)
+  const [sewing, setSewing] = useState(false)
   // Depois de salvar, as telas recarregam (remontam) para mostrar o que acabou de entrar.
   const [version, setVersion] = useState(0)
 
@@ -24,7 +26,13 @@ export default function AppShell() {
           <Route path="/eu" element={<EuScreen />} />
         </Routes>
       </main>
-      <BottomBar onNovo={() => setNovo(true)} />
+      <BottomBar
+        onNovo={() => {
+          setNovo(true)
+          setSewing(true) // a agulha costura enquanto a folha sobe, sem atrasar o texto
+        }}
+      />
+      <NeedleSewing play={sewing} onEnd={() => setSewing(false)} />
       <Sheet open={novo} onClose={() => setNovo(false)} title="Novo">
         <QuickAdd
           onSaved={() => {

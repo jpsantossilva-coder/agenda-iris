@@ -7,6 +7,7 @@ import type { Task } from '../../domain/types'
 import { useUndo } from '../../components/UndoToast'
 import Etiqueta from '../../components/Etiqueta'
 import Sheet from '../../shell/Sheet'
+import ScissorsCut from '../../motion/ScissorsCut'
 import TaskEditor from './TaskEditor'
 import { useTasks } from './useTasks'
 
@@ -19,6 +20,7 @@ export default function TarefasScreen() {
   const [tab, setTab] = useState<'abertas' | 'concluidas'>('abertas')
   const [search, setSearch] = useState('')
   const [editing, setEditing] = useState<Task | null>(null)
+  const [cutting, setCutting] = useState<Set<string>>(new Set())
 
   if (!tasks) return null
 
@@ -34,25 +36,45 @@ export default function TarefasScreen() {
     await toggleDone(repos.tasks, t, today, now())
     await reload()
   }
+  const stopCutting = (id: string) =>
+    setCutting((c) => {
+      const n = new Set(c)
+      n.delete(id)
+      return n
+    })
+
+  // A tesoura corta primeiro; o Desfazer já aparece. Quando o corte acaba, a lista recarrega sem a tarefa.
   async function excluir(t: Task) {
     await repos.tasks.remove(t.id)
-    await reload()
+    setCutting((c) => new Set(c).add(t.id))
     show('Tarefa excluída', async () => {
       await repos.tasks.restore(t.id)
+      stopCutting(t.id)
       await reload()
     })
   }
 
-  const Linha = ({ t }: { t: Task }) => {
+  // Função (não componente) para as linhas não remontarem a cada render e a animação não reiniciar.
+  const linha = (t: Task) => {
     const feita = isDoneOn(t, today)
     return (
-      <li className="linha-tarefa">
-        <button type="button" className="check" aria-label={`${feita ? 'Reabrir' : 'Concluir'} ${t.title}`} onClick={() => void concluir(t)}>
-          {feita ? '✓' : ''}
-        </button>
-        <Etiqueta task={t} done={feita} />
-        <button type="button" className="mini" aria-label={`Editar ${t.title}`} onClick={() => setEditing(t)}>✎</button>
-        <button type="button" className="mini" aria-label={`Excluir ${t.title}`} onClick={() => void excluir(t)}>🗑</button>
+      <li key={t.id}>
+        <ScissorsCut
+          play={cutting.has(t.id)}
+          onEnd={() => {
+            stopCutting(t.id)
+            void reload()
+          }}
+        >
+          <div className="linha-tarefa">
+            <button type="button" className="check" aria-label={`${feita ? 'Reabrir' : 'Concluir'} ${t.title}`} onClick={() => void concluir(t)}>
+              {feita ? '✓' : ''}
+            </button>
+            <Etiqueta task={t} done={feita} />
+            <button type="button" className="mini" aria-label={`Editar ${t.title}`} onClick={() => setEditing(t)}>✎</button>
+            <button type="button" className="mini" aria-label={`Excluir ${t.title}`} onClick={() => void excluir(t)}>🗑</button>
+          </div>
+        </ScissorsCut>
       </li>
     )
   }
@@ -71,16 +93,16 @@ export default function TarefasScreen() {
 
       {tab === 'abertas' ? (
         <>
-          <ul className="lista">{abertas.map((t) => <Linha key={t.id} t={t} />)}</ul>
+          <ul className="lista">{abertas.map(linha)}</ul>
           {adiadas.length > 0 && (
             <>
               <h2 className="adiadas">Adiadas</h2>
-              <ul className="lista">{adiadas.map((t) => <Linha key={t.id} t={t} />)}</ul>
+              <ul className="lista">{adiadas.map(linha)}</ul>
             </>
           )}
         </>
       ) : (
-        <ul className="lista">{feitas.map((t) => <Linha key={t.id} t={t} />)}</ul>
+        <ul className="lista">{feitas.map(linha)}</ul>
       )}
 
       {node}
