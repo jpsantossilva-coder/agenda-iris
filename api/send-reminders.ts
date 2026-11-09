@@ -19,8 +19,8 @@ export interface Db {
   removeSubscription(endpoint: string): Promise<void>
 }
 
-/** O cron pode atrasar um pouco; a janela de 2 min cobre isso e o `claim` impede repetição. */
-const WINDOW_MIN = 2
+/** O cron gratuito pode atrasar alguns minutos; a janela cobre isso e o `claim` impede repetição. */
+const WINDOW_MIN = 5
 
 type Job = { kind: 'reminder' | 'morning'; refId: string; fireAt: string; payload: Payload }
 

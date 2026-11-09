@@ -1,6 +1,6 @@
 // Ligações de verdade (Supabase com chave de serviço e web-push). Só roda no servidor.
 import { createClient } from '@supabase/supabase-js'
-import webpush from 'web-push'
+import { sendNotification, setVapidDetails } from 'web-push'
 import { DEFAULT_SETTINGS, type Settings } from '../../src/data/repos'
 import { taskFromRow, type Row } from '../../src/data/rows'
 import type { Db, Push, PushSub } from '../send-reminders'
@@ -15,7 +15,7 @@ export function makeRealDeps(): { db: Db; push: Push; secret: string } {
   const supabase = createClient(need('SUPABASE_URL'), need('SUPABASE_SERVICE_ROLE_KEY'), {
     auth: { persistSession: false },
   })
-  webpush.setVapidDetails(need('VAPID_SUBJECT'), need('VAPID_PUBLIC_KEY'), need('VAPID_PRIVATE_KEY'))
+  setVapidDetails(need('VAPID_SUBJECT'), need('VAPID_PUBLIC_KEY'), need('VAPID_PRIVATE_KEY'))
 
   const db: Db = {
     async usersWithSubscriptions() {
@@ -56,7 +56,7 @@ export function makeRealDeps(): { db: Db; push: Push; secret: string } {
 
   const push: Push = async (sub, payload) => {
     try {
-      await webpush.sendNotification(
+      await sendNotification(
         { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } },
         JSON.stringify(payload),
       )

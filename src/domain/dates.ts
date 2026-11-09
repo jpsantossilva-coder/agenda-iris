@@ -19,6 +19,12 @@ export function weekdayOf(date: string): number {
   return new Date(utcMidnight(date)).getUTCDay()
 }
 
+/** Soma meses a uma chave "YYYY-MM". */
+export function shiftMonthKey(key: string, delta: number): string {
+  const d = new Date(Date.UTC(Number(key.slice(0, 4)), Number(key.slice(5, 7)) - 1 + delta, 1))
+  return d.toISOString().slice(0, 7)
+}
+
 export const WEEKDAY_LONG = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado']
 export const WEEKDAY_SHORT = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb']
 

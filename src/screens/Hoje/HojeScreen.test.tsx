@@ -77,6 +77,16 @@ describe('HojeScreen', () => {
     expect(aviso.className).not.toMatch(/alert|erro|perigo|vermelho/i)
   })
 
+  it('mostra a soma do que o dia exige', async () => {
+    const repos = makeMemoryRepos()
+    await repos.tasks.create({ ...base, title: 'A', estimateMin: 60 })
+    await repos.tasks.create({ ...base, title: 'B', estimateMin: 90 })
+    render(
+      <MemoryRouter><ClockProvider now={() => TERCA_8H}><RepoProvider repos={repos}><HojeScreen /></RepoProvider></ClockProvider></MemoryRouter>,
+    )
+    expect(await screen.findByText('Hoje: 2h30 de coisas')).toBeInTheDocument()
+  })
+
   it('com pouca coisa não mostra o aviso de dia cheio', async () => {
     const repos = makeMemoryRepos()
     await repos.tasks.create({ ...base, title: 'Pequena', estimateMin: 30 })

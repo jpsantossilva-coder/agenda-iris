@@ -1,8 +1,17 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { exportData } from './exportData'
 import { makeMemoryRepos } from '../../data/memoryRepos'
 
 describe('exportData', () => {
+  it('só pede ao banco datas que o Postgres aceita (ano 0000 não existe)', async () => {
+    const repos = makeMemoryRepos()
+    const spy = vi.spyOn(repos.dayModes, 'range')
+    await exportData(repos)
+    const [from, to] = spy.mock.calls[0]
+    expect(Number(from.slice(0, 4))).toBeGreaterThanOrEqual(1900)
+    expect(Number(to.slice(0, 4))).toBeLessThanOrEqual(9999)
+  })
+
   it('exporta tudo o que existe e deixa de fora o que foi excluído', async () => {
     const repos = makeMemoryRepos()
     const novo = { title: 'a', area: 'trabalho' as const, date: '2026-11-09', time: null, estimateMin: null, remindMinBefore: 15, repeat: null }

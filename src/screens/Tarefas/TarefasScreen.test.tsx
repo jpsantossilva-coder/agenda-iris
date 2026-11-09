@@ -107,4 +107,36 @@ describe('TarefasScreen', () => {
     expect(await screen.findByText('Novo título')).toBeInTheDocument()
     expect((await repos.tasks.list())[0].title).toBe('Novo título')
   })
+
+  it('a aba Anotações lista post-its de qualquer dia (não só os de hoje)', async () => {
+    const repos = makeMemoryRepos()
+    await repos.notes.create({ text: 'nota de ontem', color: '#fff3a8', date: '2026-11-08' })
+    renderApp(<TarefasScreen />, { repos })
+    await userEvent.click(await screen.findByRole('tab', { name: 'Anotações' }))
+    expect(await screen.findByText('nota de ontem')).toBeInTheDocument()
+  })
+
+  it('edita uma anotação antiga', async () => {
+    const repos = makeMemoryRepos()
+    await repos.notes.create({ text: 'velha', color: '#fff3a8', date: '2026-11-01' })
+    renderApp(<TarefasScreen />, { repos })
+    await userEvent.click(await screen.findByRole('tab', { name: 'Anotações' }))
+    await userEvent.click(await screen.findByRole('button', { name: 'Editar anotação velha' }))
+    const campo = screen.getByLabelText('Texto da anotação')
+    await userEvent.clear(campo)
+    await userEvent.type(campo, 'nova')
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
+    await waitFor(async () => expect((await repos.notes.list())[0].text).toBe('nova'))
+  })
+
+  it('exclui uma anotação com Desfazer', async () => {
+    const repos = makeMemoryRepos()
+    await repos.notes.create({ text: 'apagar nota', color: '#fff3a8', date: '2026-11-01' })
+    renderApp(<TarefasScreen />, { repos })
+    await userEvent.click(await screen.findByRole('tab', { name: 'Anotações' }))
+    await userEvent.click(await screen.findByRole('button', { name: 'Excluir anotação apagar nota' }))
+    await waitFor(async () => expect(await repos.notes.list()).toHaveLength(0))
+    await userEvent.click(await screen.findByRole('button', { name: 'Desfazer' }))
+    await waitFor(async () => expect(await repos.notes.list()).toHaveLength(1))
+  })
 })

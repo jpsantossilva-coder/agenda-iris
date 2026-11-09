@@ -8,6 +8,7 @@ import { useUndo } from '../../components/UndoToast'
 import Etiqueta from '../../components/Etiqueta'
 import Sheet from '../../shell/Sheet'
 import ScissorsCut from '../../motion/ScissorsCut'
+import NotasLista from './NotasLista'
 import TaskEditor from './TaskEditor'
 import { useTasks } from './useTasks'
 
@@ -17,7 +18,7 @@ export default function TarefasScreen() {
   const today = useToday()
   const { tasks, reload } = useTasks()
   const { show, node } = useUndo()
-  const [tab, setTab] = useState<'abertas' | 'concluidas'>('abertas')
+  const [tab, setTab] = useState<'abertas' | 'concluidas' | 'anotacoes'>('abertas')
   const [search, setSearch] = useState('')
   const [editing, setEditing] = useState<Task | null>(null)
   const [cutting, setCutting] = useState<Set<string>>(new Set())
@@ -85,6 +86,7 @@ export default function TarefasScreen() {
       <div role="tablist" className="abas">
         <button role="tab" aria-selected={tab === 'abertas'} onClick={() => setTab('abertas')}>Abertas</button>
         <button role="tab" aria-selected={tab === 'concluidas'} onClick={() => setTab('concluidas')}>Concluídas</button>
+        <button role="tab" aria-selected={tab === 'anotacoes'} onClick={() => setTab('anotacoes')}>Anotações</button>
       </div>
       <label className="busca">
         Buscar
@@ -101,8 +103,10 @@ export default function TarefasScreen() {
             </>
           )}
         </>
-      ) : (
+      ) : tab === 'concluidas' ? (
         <ul className="lista">{feitas.map(linha)}</ul>
+      ) : (
+        <NotasLista search={search} />
       )}
 
       {node}

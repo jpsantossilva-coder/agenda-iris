@@ -227,3 +227,7 @@ h1 { font-family: Georgia, serif; font-size: 24px; margin: 0 0 4px; }
 
 /* Dar baixa no post-it */
 .postit .baixa { position: absolute; right: 8px; bottom: 6px; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid #00000030; background: #ffffff80; color: var(--marrom); font-size: 14px; }
+
+.soma-dia { margin: 0 0 8px; font-size: 13px; opacity: 0.75; }
+.nota-lista { flex: 1; margin: 6px 0; transform: none; }
+.nota-lista small { display: block; font-family: system-ui, sans-serif; font-size: 10.5px; opacity: 0.6; }

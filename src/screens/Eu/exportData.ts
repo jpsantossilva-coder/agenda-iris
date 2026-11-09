@@ -6,7 +6,7 @@ export async function exportData(repos: Repos): Promise<string> {
     repos.tasks.list(),
     repos.notes.list(),
     repos.money.list(),
-    repos.dayModes.range('0000-01-01', '9999-12-31'),
+    repos.dayModes.range('1900-01-01', '2999-12-31'),
     repos.closing.all(),
     repos.settings.get(),
   ])

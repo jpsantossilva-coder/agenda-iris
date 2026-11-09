@@ -69,6 +69,14 @@ describe('send-reminders', () => {
     expect(push).toHaveBeenCalledTimes(1)
   })
 
+  it('um cron atrasado em alguns minutos ainda manda o lembrete', async () => {
+    const push = mkPush('sent')
+    const { db } = fakeDb([tarefa])
+    const h = makeHandler({ db, push, secret: SECRET })
+    await run(h, '2026-11-12T12:49:00Z') // 4 min depois da hora certa (12:45Z)
+    expect(push).toHaveBeenCalledTimes(1)
+  })
+
   it('não manda nada fora da janela do lembrete', async () => {
     const push = mkPush('sent')
     const { db } = fakeDb([tarefa])

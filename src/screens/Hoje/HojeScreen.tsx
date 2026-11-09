@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRepos, useNow } from '../../app/context'
 import { toggleDone } from '../../data/actions'
-import { greetingFor, utcToLocal, weekOf } from '../../domain/dates'
+import { formatMin, greetingFor, utcToLocal, weekOf } from '../../domain/dates'
 import { closingStatus } from '../../domain/closing'
 import { allDoneOn, dayLoad, isDoneOn, postponed, tasksForDay } from '../../domain/tasks'
 import type { DayMode, Task } from '../../domain/types'
@@ -96,6 +96,7 @@ export default function HojeScreen() {
         </p>
       )}
 
+      {load.totalMin > 0 && <p className="soma-dia">{`Hoje: ${formatMin(load.totalMin)} de coisas`}</p>}
       {load.tight && <p className="aviso-calmo">Hoje é um dia cheio. Dá para ir por partes.</p>}
 
       <FitaMetrica

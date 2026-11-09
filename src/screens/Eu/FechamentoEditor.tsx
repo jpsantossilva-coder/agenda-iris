@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useRepos } from '../../app/context'
-import { MONTH_LONG } from '../../domain/dates'
+import { MONTH_LONG, shiftMonthKey } from '../../domain/dates'
 import type { ClosingCycle } from '../../domain/types'
 import { useUndo } from '../../components/UndoToast'
 
@@ -9,9 +9,10 @@ const newId = () => globalThis.crypto?.randomUUID?.() ?? `etapa-${Date.now()}-${
 const byDate = (a: Step, b: Step) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0)
 
 /** Etapas do fechamento de folha do mês. Ela mesma define nomes e datas; o app só conta os dias. */
-export default function FechamentoEditor({ month }: { month: string }) {
+export default function FechamentoEditor({ month: initialMonth }: { month: string }) {
   const { closing } = useRepos()
   const { show, node } = useUndo()
+  const [month, setMonth] = useState(initialMonth)
   const [steps, setSteps] = useState<Step[]>([])
   const [label, setLabel] = useState('')
   const [date, setDate] = useState('')
@@ -52,11 +53,22 @@ export default function FechamentoEditor({ month }: { month: string }) {
     })
   }
 
+  function mudarMes(delta: number) {
+    setMonth((m) => shiftMonthKey(m, delta))
+    setLabel('')
+    setDate('')
+    setEditingId(null)
+  }
+
   const mes = MONTH_LONG[Number(month.slice(5, 7)) - 1]
 
   return (
     <section className="fechamento">
-      <h2>{`Fechamento de ${mes} de ${month.slice(0, 4)}`}</h2>
+      <div className="mes-nav">
+        <button type="button" aria-label="Mês anterior" onClick={() => mudarMes(-1)}>‹</button>
+        <h2>{`Fechamento de ${mes} de ${month.slice(0, 4)}`}</h2>
+        <button type="button" aria-label="Próximo mês" onClick={() => mudarMes(1)}>›</button>
+      </div>
       <ul className="lista">
         {steps.map((s) => (
           <li key={s.id} className="linha-tarefa">

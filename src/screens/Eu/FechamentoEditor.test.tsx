@@ -57,4 +57,24 @@ describe('FechamentoEditor', () => {
     expect(nomes[0]).toContain('Primeira')
     expect(nomes[1]).toContain('Virada')
   })
+
+  it('dá para navegar entre meses e editar etapa de novembro que cai em dezembro', async () => {
+    const repos = makeMemoryRepos()
+    await repos.closing.save({ month: '2026-11', steps: [{ id: 'v', label: 'Virada', date: '2026-12-02' }] })
+    renderApp(<FechamentoEditor month="2026-12" />, { repos })
+    expect(await screen.findByRole('heading', { name: 'Fechamento de dezembro de 2026' })).toBeInTheDocument()
+    expect(screen.queryByText('Virada')).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Mês anterior' }))
+    expect(await screen.findByText('Virada')).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Excluir etapa Virada' }))
+    expect((await repos.closing.get('2026-11'))?.steps).toHaveLength(0)
+  })
+
+  it('prepara o ciclo do mês que vem', async () => {
+    const repos = renderApp(<FechamentoEditor month="2026-11" />)
+    await userEvent.click(await screen.findByRole('button', { name: 'Próximo mês' }))
+    expect(screen.getByRole('heading', { name: 'Fechamento de dezembro de 2026' })).toBeInTheDocument()
+    await adicionar('Lançar atestados', '2026-12-10')
+    await waitFor(async () => expect((await repos.closing.get('2026-12'))?.steps).toHaveLength(1))
+  })
 })
