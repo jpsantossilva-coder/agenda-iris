@@ -218,3 +218,9 @@ h1 { font-family: Georgia, serif; font-size: 24px; margin: 0 0 4px; }
 .pontos { display: flex; gap: 2px; height: 6px; }
 .ponto { display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--area, var(--terracota)); }
 .dia-titulo { font-family: Georgia, serif; font-weight: 400; font-size: 16px; margin: 16px 0 6px; }
+
+/* Eu */
+.atalhos { display: grid; gap: 10px; margin: 16px 0; }
+.etapa { flex: 1; }
+.fechamento, .financas { margin-top: 20px; }
+.fechamento h2, .financas h2, .quick-add h2 { font-family: Georgia, serif; font-size: 17px; font-weight: 400; margin: 0 0 6px; }

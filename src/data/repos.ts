@@ -46,6 +46,7 @@ export interface DayModesRepo {
 
 export interface ClosingRepo {
   get(month: string): Promise<ClosingCycle | null>
+  all(): Promise<ClosingCycle[]>
   save(cycle: ClosingCycle): Promise<void>
 }
 

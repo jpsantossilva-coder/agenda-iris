@@ -1,4 +1,5 @@
 import { createContext, useContext, type ReactNode } from 'react'
+import type { AuthPort } from '../auth/AuthGate'
 import type { Repos } from '../data/repos'
 import { utcToLocal } from '../domain/dates'
 
@@ -28,4 +29,16 @@ export function useNow(): () => Date {
 /** Dia de hoje, em "YYYY-MM-DD" no horário de Brasília. */
 export function useToday(): string {
   return utcToLocal(useNow()()).date
+}
+
+const AuthContext = createContext<AuthPort | null>(null)
+
+export function AuthProvider({ port, children }: { port: AuthPort; children: ReactNode }) {
+  return <AuthContext.Provider value={port}>{children}</AuthContext.Provider>
+}
+
+export function useAuth(): AuthPort {
+  const port = useContext(AuthContext)
+  if (!port) throw new Error('AuthProvider ausente')
+  return port
 }

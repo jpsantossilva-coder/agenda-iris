@@ -109,6 +109,10 @@ export function makeSupabaseRepos(): Repos {
         const row = check(await supabase.from('closing_cycles').select('*').eq('month', month).maybeSingle()) as Row | null
         return row ? ({ month, steps: row.steps } as ClosingCycle) : null
       },
+      async all() {
+        const rows = check(await supabase.from('closing_cycles').select('*')) as Row[]
+        return rows.map((r) => ({ month: r.month as string, steps: r.steps as ClosingCycle['steps'] }))
+      },
       async save(cycle) {
         const { data: u } = await supabase.auth.getUser()
         check(await supabase.from('closing_cycles').upsert({ user_id: u.user?.id, month: cycle.month, steps: cycle.steps }, { onConflict: 'user_id,month' }))

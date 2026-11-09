@@ -74,6 +74,9 @@ export function makeMemoryRepos(): Repos {
     async get(month) {
       return cycles.get(month) ?? null
     },
+    async all() {
+      return [...cycles.values()]
+    },
     async save(cycle) {
       cycles.set(cycle.month, cycle)
     },
