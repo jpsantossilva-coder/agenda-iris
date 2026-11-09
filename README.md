@@ -94,7 +94,7 @@ Deve responder `{"sent":0}` (ou mais). Sem o cabeçalho, responde 401.
 
 ```bash
 git remote add origin https://github.com/SEU-USUARIO/agenda-iris.git
-git push -u origin feat/agenda-inicial
+git push -u origin main
 ```
 
 ## Observações
