@@ -169,3 +169,38 @@ h1 { font-family: Georgia, serif; font-size: 24px; margin: 0 0 4px; }
   content: ''; position: absolute; top: -8px; left: 30%; width: 64px; height: 15px; transform: rotate(-3deg);
   background: repeating-linear-gradient(45deg, #ffffffaa 0 5px, #ffffff44 5px 10px); background-color: #7fc4bd; box-shadow: 0 1px 2px #0002;
 }
+
+/* Anotar e editar */
+.quick-add { display: grid; gap: 10px; }
+.quick-add label, .campos label { display: grid; gap: 4px; font-size: 13px; }
+.quick-add textarea, .quick-add input, .quick-add select, .busca input, .campos input, .campos select {
+  width: 100%; box-sizing: border-box; padding: 10px; border-radius: 10px; border: 1.5px dashed #b9a27f; background: #fff; color: var(--marrom); font: inherit; font-size: 16px;
+}
+.campos { display: grid; gap: 10px; }
+.tipo { display: flex; gap: 8px; }
+.tipo button { flex: 1; padding: 9px; border-radius: 20px; border: 1.5px dashed #b9a27f; background: #fff; color: var(--marrom); font: inherit; font-size: 13px; }
+.tipo button[aria-pressed='true'] { border-color: var(--terracota-forte); background: #fbe9dc; font-weight: 700; }
+.aviso-sensivel { margin: 0; font-size: 11.5px; opacity: 0.7; }
+.sugestao { margin: 0; display: flex; gap: 8px; flex-wrap: wrap; font-size: 12px; }
+.sugestao span { padding: 3px 10px; border-radius: 12px; background: #e3f2f0; }
+.link { justify-self: start; background: none; border: 0; padding: 0; color: var(--verde); text-decoration: underline; font: inherit; font-size: 14px; }
+.salvar { padding: 13px; border-radius: 14px; border: 0; background: var(--terracota-forte); color: #fff; font: inherit; font-size: 16px; font-weight: 700; }
+.salvar:disabled { opacity: 0.45; }
+
+/* Tarefas */
+.abas { display: flex; gap: 8px; margin: 10px 0; }
+.abas button { flex: 1; padding: 9px; border-radius: 20px; border: 1.5px dashed #b9a27f; background: var(--papel); color: var(--marrom); font: inherit; font-size: 13px; }
+.abas button[aria-selected='true'] { border-color: var(--verde); background: #e3f2f0; font-weight: 700; }
+.busca { display: grid; gap: 4px; font-size: 12px; margin-bottom: 12px; }
+.lista { list-style: none; margin: 0; padding: 0; }
+.linha-tarefa { display: flex; align-items: center; gap: 6px; }
+.linha-tarefa .etiqueta { margin: 4px 0; }
+.check { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid #b9a27f; background: #fff; color: var(--verde); font-size: 16px; line-height: 1; }
+.mini { flex: none; width: 32px; height: 32px; border: 0; background: none; font-size: 16px; }
+.adiadas { font-family: Georgia, serif; font-size: 15px; margin: 18px 0 6px; font-weight: 400; opacity: 0.8; }
+
+.undo-toast {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(92px + env(safe-area-inset-bottom)); z-index: 20;
+  display: flex; gap: 14px; align-items: center; padding: 10px 16px; border-radius: 22px; background: var(--marrom); color: var(--linho); font-size: 14px;
+}
+.undo-toast button { background: none; border: 0; color: var(--fita); font: inherit; font-weight: 700; text-decoration: underline; }

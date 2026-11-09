@@ -6,16 +6,17 @@ import HojeScreen from '../screens/Hoje/HojeScreen'
 import AgendaScreen from '../screens/Agenda/AgendaScreen'
 import TarefasScreen from '../screens/Tarefas/TarefasScreen'
 import EuScreen from '../screens/Eu/EuScreen'
+import QuickAdd from '../screens/Tarefas/QuickAdd'
 import '../styles/atelie.css'
 
-type Modal = null | 'novo' | 'atividade' | 'anotacao'
-
 export default function AppShell() {
-  const [modal, setModal] = useState<Modal>(null)
+  const [novo, setNovo] = useState(false)
+  // Depois de salvar, as telas recarregam (remontam) para mostrar o que acabou de entrar.
+  const [version, setVersion] = useState(0)
 
   return (
     <div className="app">
-      <main className="app-main">
+      <main className="app-main" key={version}>
         <Routes>
           <Route path="/" element={<HojeScreen />} />
           <Route path="/agenda" element={<AgendaScreen />} />
@@ -23,12 +24,14 @@ export default function AppShell() {
           <Route path="/eu" element={<EuScreen />} />
         </Routes>
       </main>
-      <BottomBar onNovo={() => setModal('novo')} />
-      <Sheet open={modal === 'novo'} onClose={() => setModal(null)} title="Novo">
-        <div className="sheet-options">
-          <button type="button" className="sheet-option" onClick={() => setModal('atividade')}>Nova atividade</button>
-          <button type="button" className="sheet-option" onClick={() => setModal('anotacao')}>Anotação rápida</button>
-        </div>
+      <BottomBar onNovo={() => setNovo(true)} />
+      <Sheet open={novo} onClose={() => setNovo(false)} title="Novo">
+        <QuickAdd
+          onSaved={() => {
+            setNovo(false)
+            setVersion((v) => v + 1)
+          }}
+        />
       </Sheet>
     </div>
   )

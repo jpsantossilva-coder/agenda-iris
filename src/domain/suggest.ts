@@ -1,4 +1,5 @@
 import { addDays, weekdayOf } from './dates'
+import { normalize } from './text'
 import type { Area } from './types'
 
 const WEEKDAYS: [string, number][] = [
@@ -13,10 +14,6 @@ const AREA_HINTS: [RegExp, Area][] = [
   [/\b(remedio|medico|consulta|dentista)\b/, 'saude'],
   [/\b(fechamento)\b/, 'fechamento'],
 ]
-
-function normalize(text: string): string {
-  return text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
-}
 
 export function suggestFromText(text: string, today: string): { date?: string; area?: Area } {
   const t = normalize(text)

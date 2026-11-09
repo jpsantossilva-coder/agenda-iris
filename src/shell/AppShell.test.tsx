@@ -38,6 +38,22 @@ describe('AppShell', () => {
     expect(within(sheet).getByRole('button', { name: 'Anotação rápida' })).toBeInTheDocument()
   })
 
+  it('anotar leva 2 toques: "+" e "Salvar" (o texto já está em foco)', async () => {
+    const repos = makeMemoryRepos()
+    render(
+      <MemoryRouter>
+        <RepoProvider repos={repos}>
+          <AppShell />
+        </RepoProvider>
+      </MemoryRouter>,
+    )
+    await userEvent.click(screen.getByRole('button', { name: 'Novo' }))
+    await userEvent.keyboard('ligar pro contador')
+    await userEvent.click(screen.getByRole('button', { name: 'Salvar' }))
+    expect((await repos.tasks.list())[0].title).toBe('ligar pro contador')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   it('fechar a folha a esconde', async () => {
     renderShell()
     await userEvent.click(screen.getByRole('button', { name: 'Novo' }))
