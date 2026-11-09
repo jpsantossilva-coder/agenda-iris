@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { DEFAULT_SETTINGS, type Settings } from '../../src/data/repos'
 import { taskFromRow, type Row } from '../../src/data/rows'
 import type { Db, Push, PushSub } from '../send-reminders'
+import { cleanKey, describeKey } from './keys'
 
 function need(name: string): string {
   const v = process.env[name]
@@ -16,7 +17,11 @@ export async function makeRealDeps(): Promise<{ db: Db; push: Push; secret: stri
   const supabase = createClient(need('SUPABASE_URL'), need('SUPABASE_SERVICE_ROLE_KEY'), {
     auth: { persistSession: false },
   })
-  setVapidDetails(need('VAPID_SUBJECT'), need('VAPID_PUBLIC_KEY'), need('VAPID_PRIVATE_KEY'))
+  const publicKey = cleanKey(need('VAPID_PUBLIC_KEY'))
+  const privateKey = cleanKey(need('VAPID_PRIVATE_KEY'))
+  if (publicKey.length !== 87) throw new Error(describeKey('VAPID_PUBLIC_KEY', publicKey, 87))
+  if (privateKey.length !== 43) throw new Error(describeKey('VAPID_PRIVATE_KEY', privateKey, 43))
+  setVapidDetails(need('VAPID_SUBJECT').trim(), publicKey, privateKey)
 
   const db: Db = {
     async usersWithSubscriptions() {
