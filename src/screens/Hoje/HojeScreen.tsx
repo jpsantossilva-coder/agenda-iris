@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRepos, useNow } from '../../app/context'
 import { toggleDone } from '../../data/actions'
-import { formatMin, greetingFor, utcToLocal, weekOf } from '../../domain/dates'
+import { formatLongDate, formatMin, greetingFor, utcToLocal, weekOf } from '../../domain/dates'
 import { closingStatus } from '../../domain/closing'
 import { allDoneOn, dayLoad, isDoneOn, postponed, tasksForDay } from '../../domain/tasks'
 import type { DayMode, Task } from '../../domain/types'
@@ -70,6 +70,7 @@ export default function HojeScreen() {
   return (
     <section className="hoje">
       <h1>{name ? `${greeting}, ${name}` : greeting}</h1>
+      <p className="data-hoje">{formatLongDate(today)}</p>
 
       <WeekStrip
         days={weekOf(today)}

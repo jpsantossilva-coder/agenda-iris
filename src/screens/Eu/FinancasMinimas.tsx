@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import Icon from '../../components/Icon'
 import { useRepos } from '../../app/context'
 import type { MoneyNote } from '../../data/repos'
 import { useUndo } from '../../components/UndoToast'
@@ -67,9 +68,9 @@ export default function FinancasMinimas() {
                 setAmount(m.amount === null ? '' : String(m.amount).replace('.', ','))
               }}
             >
-              ✎
+              <Icon name="pencil" />
             </button>
-            <button type="button" className="mini" aria-label={`Excluir ${m.text}`} onClick={() => void excluir(m)}>🗑</button>
+            <button type="button" className="mini" aria-label={`Excluir ${m.text}`} onClick={() => void excluir(m)}><Icon name="trash" /></button>
           </li>
         ))}
       </ul>

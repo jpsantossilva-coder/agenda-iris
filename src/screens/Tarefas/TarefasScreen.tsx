@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Icon from '../../components/Icon'
 import { useNow, useRepos, useToday } from '../../app/context'
 import { toggleDone } from '../../data/actions'
 import { normalize } from '../../domain/text'
@@ -72,8 +73,8 @@ export default function TarefasScreen() {
               {feita ? '✓' : ''}
             </button>
             <Etiqueta task={t} done={feita} />
-            <button type="button" className="mini" aria-label={`Editar ${t.title}`} onClick={() => setEditing(t)}>✎</button>
-            <button type="button" className="mini" aria-label={`Excluir ${t.title}`} onClick={() => void excluir(t)}>🗑</button>
+            <button type="button" className="mini" aria-label={`Editar ${t.title}`} onClick={() => setEditing(t)}><Icon name="pencil" /></button>
+            <button type="button" className="mini" aria-label={`Excluir ${t.title}`} onClick={() => void excluir(t)}><Icon name="trash" /></button>
           </div>
         </ScissorsCut>
       </li>

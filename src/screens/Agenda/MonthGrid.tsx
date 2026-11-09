@@ -1,5 +1,6 @@
 import { MONTH_LONG, monthGrid } from '../../domain/dates'
 import { tasksForDay } from '../../domain/tasks'
+import Icon from '../../components/Icon'
 import type { DayMode, Task } from '../../domain/types'
 
 export default function MonthGrid({
@@ -39,7 +40,7 @@ export default function MonthGrid({
             aria-label={`${n} de ${mesNome}${home ? ', home office' : ''}`}
             onClick={() => onPick(d)}
           >
-            <span>{home ? '🏠' : n}</span>
+            <span>{home ? <Icon name="home" /> : n}</span>
             <span className="pontos">
               {areas.map((a) => (
                 <i key={a} className="ponto" style={{ ['--area' as string]: `var(--area-${a})` }} />

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import Icon from '../../components/Icon'
 import { useRepos } from '../../app/context'
 import { MONTH_LONG, shiftMonthKey } from '../../domain/dates'
 import type { ClosingCycle } from '../../domain/types'
@@ -85,9 +86,9 @@ export default function FechamentoEditor({ month: initialMonth }: { month: strin
                 setDate(s.date)
               }}
             >
-              ✎
+              <Icon name="pencil" />
             </button>
-            <button type="button" className="mini" aria-label={`Excluir etapa ${s.label}`} onClick={() => void remove(s)}>🗑</button>
+            <button type="button" className="mini" aria-label={`Excluir etapa ${s.label}`} onClick={() => void remove(s)}><Icon name="trash" /></button>
           </li>
         ))}
       </ul>

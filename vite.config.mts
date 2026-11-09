@@ -17,8 +17,8 @@ export default defineConfig({
         short_name: 'Agenda',
         lang: 'pt-BR',
         display: 'standalone',
-        theme_color: '#4a3526',
-        background_color: '#efe4d0',
+        theme_color: '#1f2d57',
+        background_color: '#f6f3ea',
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icon-512.png', sizes: '512x512', type: 'image/png' },

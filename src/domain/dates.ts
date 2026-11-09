@@ -53,6 +53,18 @@ export function greetingFor(time: string): string {
   return 'Boa noite'
 }
 
+/** "2026-11-12" -> "quinta, 12 de novembro". */
+export function formatLongDate(date: string): string {
+  return `${WEEKDAY_LONG[weekdayOf(date)]}, ${Number(date.slice(8))} de ${MONTH_LONG[Number(date.slice(5, 7)) - 1]}`
+}
+
+/** "09:00" -> "9h", "10:30" -> "10h30". */
+export function formatTimeLabel(time: string): string {
+  const h = Number(time.slice(0, 2))
+  const m = time.slice(3, 5)
+  return m === '00' ? `${h}h` : `${h}h${m}`
+}
+
 /** 40 -> "40 min", 60 -> "1h", 90 -> "1h30". */
 export function formatMin(min: number): string {
   if (min < 60) return `${min} min`

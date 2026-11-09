@@ -1,6 +1,7 @@
 import { WEEKDAY_LONG, WEEKDAY_SHORT, weekdayOf } from '../domain/dates'
 import type { DayMode } from '../domain/types'
 import HomeBounce from '../motion/HomeBounce'
+import Icon from './Icon'
 
 export default function WeekStrip({
   days,
@@ -33,7 +34,7 @@ export default function WeekStrip({
           >
             <small>{WEEKDAY_SHORT[wd]}</small>
             <span className="botao-dia">
-              {home ? <HomeBounce play={bounceDay === d} onEnd={onBounceEnd}>🏠</HomeBounce> : n}
+              {home ? <HomeBounce play={bounceDay === d} onEnd={onBounceEnd}><Icon name="home" /></HomeBounce> : n}
             </span>
           </button>
         )

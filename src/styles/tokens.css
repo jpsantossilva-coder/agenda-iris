@@ -1,23 +1,57 @@
+/* Caderno de moldes: papel de molde quadriculado, tinta índigo, giz coral. */
 :root {
-  --linho: #efe4d0;
-  --marrom: #4a3526;
-  --terracota: #c9733a;
-  --terracota-forte: #b8541c;
-  --verde: #2f7f7a;
-  --fita: #f3d977;
-  --postit: #fff3a8;
-  --papel: #fffaf0;
-  --area-trabalho: #c9733a;
-  --area-fechamento: #2f7f7a;
+  --papel: #f6f3ea;
+  --papel-claro: #fffdf7;
+  --tinta: #1f2d57;
+  --tinta-suave: #1f2d5766;
+  --giz: #e9726b;
+  --giz-escuro: #c9524b;
+  --post-it: #ffe7a8;
+  --grade: #5b78b414;
+
+  /* Cores das áreas (a seta de fio, o ponto do calendário) */
+  --area-trabalho: #d2693d;
+  --area-fechamento: #1f7a6f;
   --area-costura: #b5476b;
-  --area-familia: #d9a441;
-  --area-descanso: #7a8fc4;
-  --area-leitura: #7a5fb0;
-  --area-saude: #5aa36b;
+  --area-familia: #c98f1f;
+  --area-descanso: #5b78b4;
+  --area-leitura: #7552b8;
+  --area-saude: #3f8f5b;
+
+  /* Nomes antigos, apontando para a paleta nova (animações e telas ainda os usam) */
+  --linho: var(--papel);
+  --marrom: var(--tinta);
+  --verde: var(--area-fechamento);
+  --terracota: var(--giz);
+  --terracota-forte: var(--giz-escuro);
+  --papel-card: var(--papel-claro);
+  --fita: #f0d170;
+  --postit: var(--post-it);
+
+  --fonte-titulo: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', system-ui, sans-serif;
+  --fonte-mao: 'Caveat', 'Segoe Script', cursive;
 }
+
 html, body, #root { height: 100%; margin: 0; }
+
 body {
-  background: var(--linho);
-  color: var(--marrom);
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background-color: var(--papel);
+  background-image:
+    linear-gradient(var(--grade) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grade) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: var(--tinta);
+  font-family: var(--fonte-titulo);
+  font-size: 15px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--giz);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
 }

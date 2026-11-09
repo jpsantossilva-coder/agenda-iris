@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom'
+import Icon, { type IconName } from '../components/Icon'
 
-function Item({ to, label, end }: { to: string; label: string; end?: boolean }) {
+function Item({ to, label, icon, end }: { to: string; label: string; icon: IconName; end?: boolean }) {
   return (
     <NavLink to={to} end={end} className={({ isActive }) => `bar-item${isActive ? ' on' : ''}`}>
-      <span className="botao" aria-hidden />
+      <Icon name={icon} />
       {label}
     </NavLink>
   )
@@ -12,13 +13,15 @@ function Item({ to, label, end }: { to: string; label: string; end?: boolean }) 
 export default function BottomBar({ onNovo }: { onNovo: () => void }) {
   return (
     <nav className="bottom-bar" aria-label="Principal">
-      <Item to="/" label="Hoje" end />
-      <Item to="/agenda" label="Agenda" />
+      <Item to="/" label="Hoje" icon="home" end />
+      <Item to="/agenda" label="Agenda" icon="calendar" />
       <button type="button" className="bar-item bar-plus" aria-label="Novo" onClick={onNovo}>
-        <span className="botao grande" aria-hidden>+</span>
+        <span className="circ" aria-hidden>
+          <Icon name="plus" />
+        </span>
       </button>
-      <Item to="/tarefas" label="Tarefas" />
-      <Item to="/eu" label="Eu" />
+      <Item to="/tarefas" label="Tarefas" icon="check" />
+      <Item to="/eu" label="Eu" icon="user" />
     </nav>
   )
 }

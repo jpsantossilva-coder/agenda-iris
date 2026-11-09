@@ -29,43 +29,44 @@ export default function LoginScreen({
   }
 
   return (
-    <main style={{ maxWidth: 360, margin: '0 auto', padding: '64px 24px' }}>
-      <h1 style={{ fontFamily: 'Georgia, serif' }}>Agenda da Iris</h1>
-      <form onSubmit={submit} method="post" style={{ display: 'grid', gap: 12 }}>
-        <label>
-          E-mail
-          <input
-            type="email"
-            name="email"
-            inputMode="email"
-            autoComplete="username"
-            autoCapitalize="none"
-            autoCorrect="off"
-            spellCheck={false}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ width: '100%', padding: 10, boxSizing: 'border-box', fontSize: 16 }}
-          />
-        </label>
-        <label>
-          Senha
-          <input
-            type="password"
-            name="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ width: '100%', padding: 10, boxSizing: 'border-box', fontSize: 16 }}
-          />
-        </label>
-        {error && <p role="alert" style={{ margin: 0 }}>{error}</p>}
-        <button type="submit" disabled={busy} style={{ padding: 12, borderRadius: 12, border: 0, background: 'var(--terracota-forte)', color: '#fff', fontSize: 16 }}>
-          Entrar
-        </button>
-        <p style={{ margin: 0, fontSize: 12, opacity: 0.7 }}>
-          Você continua conectada neste aparelho. Se o iPhone oferecer, deixe ele salvar a senha.
-        </p>
-      </form>
+    <main className="login">
+      <div className="login-card">
+        <h1>Agenda da Iris</h1>
+        <p className="subtitulo">o dia, peça por peça</p>
+        <form onSubmit={submit} method="post">
+          <label>
+            E-mail
+            <input
+              type="email"
+              name="email"
+              inputMode="email"
+              autoComplete="username"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+          <label>
+            Senha
+            <input
+              type="password"
+              name="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          {error && <p role="alert" className="erro">{error}</p>}
+          <button type="submit" className="salvar" disabled={busy}>
+            Entrar
+          </button>
+          <p className="nota-login">
+            Você continua conectada neste aparelho. Se o iPhone oferecer, deixe ele salvar a senha.
+          </p>
+        </form>
+      </div>
     </main>
   )
 }

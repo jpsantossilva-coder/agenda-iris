@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { addDays, diffDays, localToUtc, utcToLocal, weekOf, greetingFor, monthGrid } from './dates'
+import { addDays, diffDays, localToUtc, utcToLocal, weekOf, greetingFor, monthGrid, formatLongDate, formatTimeLabel } from './dates'
 
 describe('dates', () => {
   it('weekOf devolve segunda a domingo da semana da data', () => {
@@ -15,6 +15,15 @@ describe('dates', () => {
     expect(g[0]).toBe('2026-10-26')
     expect(g).toContain('2026-11-30')
     expect(g[41]).toBe('2026-12-06')
+  })
+  it('formatLongDate escreve o dia por extenso em português', () => {
+    expect(formatLongDate('2026-11-12')).toBe('quinta, 12 de novembro')
+    expect(formatLongDate('2026-12-01')).toBe('terça, 1 de dezembro')
+  })
+  it('formatTimeLabel tira o zero e usa "h"', () => {
+    expect(formatTimeLabel('09:00')).toBe('9h')
+    expect(formatTimeLabel('10:30')).toBe('10h30')
+    expect(formatTimeLabel('00:05')).toBe('0h05')
   })
   it('addDays e diffDays atravessam o fim do mês', () => {
     expect(addDays('2026-11-30', 2)).toBe('2026-12-02')

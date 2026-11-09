@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import Icon from '../../components/Icon'
 import { useRepos } from '../../app/context'
 import type { Note } from '../../data/repos'
 import { normalize } from '../../domain/text'
@@ -48,9 +49,9 @@ export default function NotasLista({ search }: { search: string }) {
                 setTexto(n.text)
               }}
             >
-              ✎
+              <Icon name="pencil" />
             </button>
-            <button type="button" className="mini" aria-label={`Excluir anotação ${n.text}`} onClick={() => void excluir(n)}>🗑</button>
+            <button type="button" className="mini" aria-label={`Excluir anotação ${n.text}`} onClick={() => void excluir(n)}><Icon name="trash" /></button>
           </li>
         ))}
       </ul>

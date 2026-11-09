@@ -43,6 +43,11 @@ describe('HojeScreen', () => {
     expect(await screen.findByRole('heading', { name: 'Boa tarde, Iris' })).toBeInTheDocument()
   })
 
+  it('mostra a data de hoje por extenso abaixo da saudação', async () => {
+    setup()
+    expect(await screen.findByText('terça, 10 de novembro')).toBeInTheDocument()
+  })
+
   it('sem nome cumprimenta só com Bom dia', async () => {
     setup()
     expect(await screen.findByRole('heading', { name: 'Bom dia' })).toBeInTheDocument()
