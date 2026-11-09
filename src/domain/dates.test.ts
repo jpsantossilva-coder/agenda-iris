@@ -1,0 +1,26 @@
+import { describe, it, expect } from 'vitest'
+import { addDays, diffDays, localToUtc, utcToLocal, weekOf, greetingFor } from './dates'
+
+describe('dates', () => {
+  it('weekOf devolve segunda a domingo da semana da data', () => {
+    expect(weekOf('2026-11-12')).toEqual([
+      '2026-11-09', '2026-11-10', '2026-11-11', '2026-11-12', '2026-11-13', '2026-11-14', '2026-11-15',
+    ])
+    expect(weekOf('2026-11-15')[0]).toBe('2026-11-09')
+    expect(weekOf('2026-11-09')[0]).toBe('2026-11-09')
+  })
+  it('addDays e diffDays atravessam o fim do mês', () => {
+    expect(addDays('2026-11-30', 2)).toBe('2026-12-02')
+    expect(diffDays('2026-11-30', '2026-12-02')).toBe(2)
+  })
+  it('utcToLocal e localToUtc são inversos no fuso de Brasília', () => {
+    const l = utcToLocal(new Date('2026-11-13T02:30:00Z'))
+    expect(l).toEqual({ date: '2026-11-12', time: '23:30' })
+    expect(localToUtc(l.date, l.time).toISOString()).toBe('2026-11-13T02:30:00.000Z')
+  })
+  it('greetingFor muda ao longo do dia', () => {
+    expect(greetingFor('08:00')).toBe('Bom dia')
+    expect(greetingFor('13:00')).toBe('Boa tarde')
+    expect(greetingFor('19:30')).toBe('Boa noite')
+  })
+})

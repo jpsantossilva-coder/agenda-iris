@@ -19,6 +19,30 @@ export function weekdayOf(date: string): number {
   return new Date(utcMidnight(date)).getUTCDay()
 }
 
+export const WEEKDAY_LONG = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado']
+export const WEEKDAY_SHORT = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb']
+
+/** Segunda a domingo da semana que contém a data. */
+export function weekOf(date: string): string[] {
+  const monday = addDays(date, -((weekdayOf(date) + 6) % 7))
+  return Array.from({ length: 7 }, (_, i) => addDays(monday, i))
+}
+
+export function greetingFor(time: string): string {
+  const hour = Number(time.slice(0, 2))
+  if (hour < 12) return 'Bom dia'
+  if (hour < 18) return 'Boa tarde'
+  return 'Boa noite'
+}
+
+/** 40 -> "40 min", 60 -> "1h", 90 -> "1h30". */
+export function formatMin(min: number): string {
+  if (min < 60) return `${min} min`
+  const h = Math.floor(min / 60)
+  const m = min % 60
+  return m === 0 ? `${h}h` : `${h}h${String(m).padStart(2, '0')}`
+}
+
 /** Instante UTC de uma data e hora locais de Brasília. */
 export function localToUtc(date: string, time: string): Date {
   return new Date(Date.parse(`${date}T${time}:00-03:00`))

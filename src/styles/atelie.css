@@ -118,3 +118,54 @@ h1 { font-family: Georgia, serif; font-size: 24px; margin: 0 0 4px; }
   font-size: 16px;
   text-align: left;
 }
+
+/* Faixa da semana: botões de costura */
+.week { display: flex; justify-content: space-between; margin: 10px 0 12px; }
+.week-day { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 44px; padding: 0; background: none; border: 0; color: inherit; font: inherit; font-size: 10px; }
+.botao-dia {
+  display: block; width: 32px; height: 32px; border-radius: 50%; line-height: 32px; text-align: center; font-size: 13px; font-weight: 700;
+  background: radial-gradient(circle at 38% 38%, #f5ede0, #d9c9ad); box-shadow: inset 0 0 0 2px #c9b58f, 0 1px 2px #0004;
+}
+.week-day.hoje .botao-dia { background: radial-gradient(circle at 38% 38%, #e08a4e, var(--terracota-forte)); box-shadow: inset 0 0 0 2px #f3b385, 0 1px 3px #0006; color: #fff; }
+.week-day.home .botao-dia { background: radial-gradient(circle at 38% 38%, #7fc4bd, var(--verde)); box-shadow: inset 0 0 0 2px #a9ddd7; color: #fff; }
+
+/* Presencial / Home office */
+.modo { display: flex; gap: 8px; margin-bottom: 12px; }
+.modo button { flex: 1; padding: 9px; border-radius: 20px; border: 1.5px dashed #b9a27f; background: var(--papel); color: var(--marrom); font: inherit; font-size: 13px; }
+.modo button[aria-pressed='true'] { border-color: var(--verde); background: #e3f2f0; font-weight: 700; }
+
+.cartao-fechamento, .aviso-calmo { background: var(--papel); border: 1.5px dashed #b9a27f; border-radius: 12px; padding: 10px 12px; margin: 0 0 12px; font-size: 13px; }
+.cartao-fechamento { border-color: var(--area-fechamento); }
+
+/* Fita métrica + etiquetas de tecido */
+.fita { list-style: none; margin: 0; padding: 0; }
+.fita li { display: flex; gap: 8px; align-items: stretch; }
+.fita-hora {
+  flex: none; width: 46px; box-sizing: border-box; padding: 8px 2px; text-align: center; font-size: 10px; font-weight: 700; color: #5a4210;
+  background-color: #f3d977;
+  background-image: repeating-linear-gradient(#0000 0 9px, #7a5a1e 9px 10px);
+  box-shadow: inset 0 0 0 1px #c9a43c;
+}
+.etiqueta {
+  position: relative; flex: 1; margin: 5px 0; background: var(--papel); padding: 9px 12px 9px 26px;
+  clip-path: polygon(16px 0, 100% 0, 100% 100%, 16px 100%, 0 50%);
+}
+.etiqueta::before { content: ''; position: absolute; left: 8px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: var(--linho); box-shadow: inset 0 0 0 1px #b9a27f; }
+.etiqueta::after { content: ''; position: absolute; inset: 3px 3px 3px 17px; border: 1.5px dashed var(--area, var(--terracota)); border-radius: 3px; pointer-events: none; }
+.etiqueta b { display: block; font-size: 14px; }
+.etiqueta small { opacity: 0.7; }
+.etiqueta.feita b { text-decoration: line-through; opacity: 0.6; }
+
+.convite-adiadas { display: block; margin: 14px 0 0; padding: 10px 12px; border-radius: 12px; border: 1.5px dashed #b9a27f; background: var(--papel); color: var(--marrom); font-size: 13px; text-decoration: none; }
+
+/* Post-it com fita adesiva */
+.postits { display: grid; gap: 18px; margin-top: 20px; }
+.postit {
+  position: relative; padding: 14px 12px 10px; border-radius: 2px 2px 8px 2px; box-shadow: 0 3px 6px #0002; transform: rotate(-1.2deg);
+  font-family: 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive; font-size: 14px;
+}
+.postit:nth-child(even) { transform: rotate(0.9deg); }
+.postit::before {
+  content: ''; position: absolute; top: -8px; left: 30%; width: 64px; height: 15px; transform: rotate(-3deg);
+  background: repeating-linear-gradient(45deg, #ffffffaa 0 5px, #ffffff44 5px 10px); background-color: #7fc4bd; box-shadow: 0 1px 2px #0002;
+}
