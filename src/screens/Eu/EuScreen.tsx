@@ -3,6 +3,7 @@ import { useAuth, useRepos, useToday } from '../../app/context'
 import { DEFAULT_SETTINGS, type Settings } from '../../data/repos'
 import FechamentoEditor from './FechamentoEditor'
 import FinancasMinimas from './FinancasMinimas'
+import NotificacoesCard from '../../push/NotificacoesCard'
 import { downloadText, exportData } from './exportData'
 
 export default function EuScreen() {
@@ -60,6 +61,8 @@ export default function EuScreen() {
         <button type="button" className="sheet-option" onClick={() => void bloco('leitura')}>Adicionar bloco de leitura</button>
         <button type="button" className="sheet-option" onClick={() => void bloco('descanso')}>Adicionar bloco de descanso</button>
       </div>
+
+      <NotificacoesCard />
 
       <FechamentoEditor month={today.slice(0, 7)} />
       <FinancasMinimas />

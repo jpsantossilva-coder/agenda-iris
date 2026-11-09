@@ -199,7 +199,8 @@ describe('HojeScreen', () => {
     render(
       <MemoryRouter><ClockProvider now={() => new Date()}><RepoProvider repos={repos}><HojeScreen /></RepoProvider></ClockProvider></MemoryRouter>,
     )
-    expect((await screen.findByText('novo')).closest('.mi-drop')).toHaveClass('go')
+    const novo = await screen.findByText('novo')
+    await waitFor(() => expect(novo.closest('.mi-drop')).toHaveClass('go'))
     expect(screen.getByText('velho').closest('.mi-drop')).not.toHaveClass('go')
   })
 })

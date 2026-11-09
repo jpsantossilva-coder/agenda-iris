@@ -11,5 +11,5 @@
     "isolatedModules": true,
     "types": ["vite/client", "vite-plugin-pwa/client", "vitest/globals"]
   },
-  "include": ["src", "api", "vite.config.ts"]
+  "include": ["src", "api", "vite.config.mts"]
 }
