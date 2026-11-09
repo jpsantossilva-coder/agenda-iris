@@ -1,0 +1,23 @@
+:root {
+  --linho: #efe4d0;
+  --marrom: #4a3526;
+  --terracota: #c9733a;
+  --terracota-forte: #b8541c;
+  --verde: #2f7f7a;
+  --fita: #f3d977;
+  --postit: #fff3a8;
+  --papel: #fffaf0;
+  --area-trabalho: #c9733a;
+  --area-fechamento: #2f7f7a;
+  --area-costura: #b5476b;
+  --area-familia: #d9a441;
+  --area-descanso: #7a8fc4;
+  --area-leitura: #7a5fb0;
+  --area-saude: #5aa36b;
+}
+html, body, #root { height: 100%; margin: 0; }
+body {
+  background: var(--linho);
+  color: var(--marrom);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
