@@ -1,0 +1,112 @@
+<style>
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.m{background:#efe4d0;color:#4a3526;border-radius:16px;padding:14px;font-family:system-ui,sans-serif}
+.m h4{margin:0 0 2px;font-family:Georgia,serif;font-size:15px}
+.m p{font-size:11.5px;opacity:.75;margin:0 0 10px;min-height:30px}
+.stage{position:relative;height:110px;background:#fffaf0;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1.5px dashed #c9b58f;font-size:13px}
+.play{margin-top:10px;border:0;background:#4a3526;color:#efe4d0;border-radius:18px;padding:6px 14px;cursor:pointer;font-size:12px}
+@keyframes w{to{width:100%}}
+@keyframes p{0%{opacity:1;left:0}90%{opacity:1}100%{opacity:0;left:100%}}
+/* 1 caneta */
+.t1{position:relative;font-size:15px;font-weight:600;padding:4px 6px}
+.strike{position:absolute;left:0;top:55%;height:3px;width:0;background:#2f7f7a;border-radius:2px}
+.pen{position:absolute;left:0;top:-8px;font-size:20px;opacity:0;transform:rotate(20deg)}
+.go .strike{animation:w .7s ease-out forwards}
+.go .pen{animation:p .7s ease-out forwards}
+.go .t1{opacity:.55;transition:opacity .3s .7s}
+/* 2 carimbo */
+.pn{position:relative;background:#c9ecd6;padding:14px 24px;border-radius:2px 2px 8px 2px;box-shadow:0 3px 6px #0002;font-family:"Segoe Script","Bradley Hand",cursive}
+.stp{position:absolute;right:-12px;top:-12px;width:44px;height:44px;border:3px solid #b5476b;border-radius:50%;color:#b5476b;font:700 10px/38px system-ui;text-align:center;font-style:normal;opacity:0;transform:scale(3) rotate(-30deg)}
+.go .stp{animation:st .45s cubic-bezier(.2,1.4,.4,1) forwards}
+.go .pn{animation:sh .25s .35s}
+@keyframes st{to{opacity:.9;transform:scale(1) rotate(-14deg)}}
+@keyframes sh{50%{transform:translateY(2px) rotate(.8deg)}}
+/* 3 agulha */
+.seam{position:absolute;left:14px;right:14px;top:30px;height:0}
+.thr{position:absolute;left:0;top:0;height:0;width:0;border-top:2px dashed #c9733a}
+.ndl{position:absolute;left:0;top:-12px;font-size:18px;opacity:0}
+.newtag{position:absolute;left:50%;top:56px;transform:translateX(-50%) scale(.6);opacity:0;background:#fffaf0;padding:8px 14px;border:1.5px dashed #2f7f7a;border-radius:6px;font-size:12px;white-space:nowrap}
+.go .thr{animation:w .7s linear forwards}
+.go .ndl{animation:p .7s linear forwards}
+.go .newtag{animation:pop .4s .7s forwards}
+@keyframes pop{to{opacity:1;transform:translateX(-50%) scale(1)}}
+/* 4 home office */
+.hoo{display:flex;flex-direction:column;gap:8px;align-items:center}
+.chip{padding:7px 14px;border-radius:20px;border:1.5px dashed #b9a27f;background:#fffaf0;opacity:.55;filter:grayscale(1)}
+.go .chip{animation:bounce .7s forwards;background:#e3f2f0;border-color:#2f7f7a}
+@keyframes bounce{0%{transform:scale(1)}30%{transform:translateY(-14px) scale(1.15)}55%{transform:translateY(0) scale(.95)}75%{transform:translateY(-5px)}100%{transform:none;opacity:1;filter:none}}
+.go .hint{opacity:1}
+.hint{font-size:11px;opacity:.6;transition:opacity .4s .4s}
+/* 5 post-it */
+.pi{position:relative;background:#fff3a8;padding:14px 22px;border-radius:2px 2px 8px 2px;box-shadow:0 3px 6px #0002;font-family:"Segoe Script","Bradley Hand",cursive;opacity:0;transform:translateY(-120px) rotate(-12deg)}
+.pi::before{content:"";position:absolute;top:-8px;left:30%;width:62px;height:15px;background:repeating-linear-gradient(45deg,#ffffffaa 0 5px,#ffffff44 5px 10px);background-color:#7fc4bd;box-shadow:0 1px 2px #0002;transform:scaleX(0) rotate(-3deg);transform-origin:left}
+.go .pi{animation:drop .6s cubic-bezier(.3,1.5,.5,1) forwards}
+.go .pi::before{animation:tp .25s .55s forwards}
+@keyframes drop{to{opacity:1;transform:translateY(0) rotate(-2deg)}}
+@keyframes tp{to{transform:scaleX(1) rotate(-3deg)}}
+/* 6 botões */
+.fall{position:absolute;top:-24px;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 38% 38%,#f5ede0,#d9c9ad);box-shadow:inset 0 0 0 2px #c9b58f;animation:fl 1.3s ease-in forwards}
+.fall::before{content:"";position:absolute;left:6px;top:6px;width:2px;height:2px;border-radius:50%;background:#4a3526;box-shadow:5px 0 #4a3526,0 5px #4a3526,5px 5px #4a3526}
+@keyframes fl{to{transform:translateY(150px) rotate(300deg)}}
+/* 7 tesoura */
+.cut{position:relative;width:170px;height:44px}
+.half{position:absolute;inset:0;background:#fffaf0;border:1.5px dashed #c9733a;border-radius:6px;padding:13px 12px;font-size:12px}
+.ha{clip-path:inset(0 0 50% 0)}.hb{clip-path:inset(50% 0 0 0)}
+.sc{position:absolute;left:0;top:10px;opacity:0;font-size:18px}
+.go .sc{animation:p .5s linear forwards}
+.go .ha{animation:ca .5s .5s forwards}
+.go .hb{animation:cb .5s .5s forwards}
+@keyframes ca{to{transform:translate(-8px,-6px) rotate(-4deg);opacity:0}}
+@keyframes cb{to{transform:translate(8px,8px) rotate(4deg);opacity:0}}
+/* 8 loading */
+.loop .thr{animation:w 1.6s linear infinite}
+.loop .ndl{animation:p 1.6s linear infinite}
+.load small{position:absolute;bottom:14px;left:0;right:0;text-align:center;opacity:.65;font-size:11.5px}
+.load .seam{top:44px}
+</style>
+
+<h2>Microinterações para ela</h2>
+<p class="subtitle">Clique em "Ver" (ou na caixa) para ver cada uma. Todas no tema de costura e papel. Escolha as que quiser, ou eu coloco todas.</p>
+
+<div class="grid">
+
+<div class="m"><h4>1 · Caneta riscando</h4><p>Ao concluir, uma canetinha risca a tarefa.</p>
+<div class="stage" id="s1" onclick="play('s1')"><div class="t1">Lançar atestados<span class="strike"></span><span class="pen">✏️</span></div></div>
+<button class="play" onclick="play('s1')">Ver</button></div>
+
+<div class="m"><h4>2 · Carimbo "FEITO"</h4><p>Um carimbo bate no post-it e ele dá uma tremidinha.</p>
+<div class="stage" id="s2" onclick="play('s2')"><div class="pn">Conferir folha<i class="stp">FEITO</i></div></div>
+<button class="play" onclick="play('s2')">Ver</button></div>
+
+<div class="m"><h4>3 · Agulha no "+"</h4><p>Ao tocar no "+", uma agulha costura uma linha e a nova atividade aparece.</p>
+<div class="stage" id="s3" onclick="play('s3')"><div class="seam"><i class="thr"></i><span class="ndl">🪡</span></div><div class="newtag">Nova atividade</div></div>
+<button class="play" onclick="play('s3')">Ver</button></div>
+
+<div class="m"><h4>4 · Casinha pulando</h4><p>Ao marcar home office, a casinha dá um pulinho feliz.</p>
+<div class="stage" id="s4" onclick="play('s4')"><div class="hoo"><div class="chip">🏠 Home office</div><div class="hint" style="opacity:.6">marcado para quinta</div></div></div>
+<button class="play" onclick="play('s4')">Ver</button></div>
+
+<div class="m"><h4>5 · Post-it colando</h4><p>A anotação cai na tela e a fita adesiva cola por cima.</p>
+<div class="stage" id="s5" onclick="play('s5')"><div class="pi">ligar pro contador</div></div>
+<button class="play" onclick="play('s5')">Ver</button></div>
+
+<div class="m"><h4>6 · Chuva de botões</h4><p>Quando ela conclui tudo do dia, caem botões de costura.</p>
+<div class="stage" id="s6" onclick="rain()"><b id="s6t" style="opacity:.0;transition:opacity .4s">Dia fechado! ♡</b></div>
+<button class="play" onclick="rain()">Ver</button></div>
+
+<div class="m"><h4>7 · Tesoura cortando</h4><p>Ao excluir, uma tesoura corta a etiqueta ao meio. Aparece "Desfazer".</p>
+<div class="stage" id="s7" onclick="play('s7')"><div class="cut"><div class="half ha">Almoço · 45 min</div><div class="half hb">Almoço · 45 min</div><span class="sc">✂️</span></div></div>
+<button class="play" onclick="play('s7')">Ver</button></div>
+
+<div class="m"><h4>8 · Carregando</h4><p>Tela de abertura: a agulha puxa a linha, costurando pontinhos.</p>
+<div class="stage load loop"><div class="seam"><i class="thr"></i><span class="ndl">🪡</span></div><small>Preparando seu dia…</small></div>
+<button class="play" style="visibility:hidden">.</button></div>
+
+</div>
+
+<script>
+function play(id){var e=document.getElementById(id);e.classList.remove('go');void e.offsetWidth;e.classList.add('go');}
+function rain(){var s=document.getElementById('s6'),t=document.getElementById('s6t');t.style.opacity=1;
+for(var i=0;i<16;i++){var b=document.createElement('span');b.className='fall';b.style.left=(Math.random()*88+2)+'%';b.style.animationDelay=(Math.random()*0.6)+'s';s.appendChild(b);setTimeout(function(x){x.remove()},2200,b);}
+setTimeout(function(){t.style.opacity=0},2200);}
+</script>

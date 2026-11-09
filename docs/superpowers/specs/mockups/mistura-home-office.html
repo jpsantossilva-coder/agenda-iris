@@ -1,0 +1,123 @@
+<style>
+.row{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;align-items:flex-start}
+.col{width:290px}
+.col h3{margin:0 0 2px}
+.col .why{font-size:12px;opacity:.75;margin:0 0 10px;min-height:34px}
+.phone{width:270px;height:560px;border:6px solid #15151a;border-radius:36px;overflow:hidden;position:relative;font-family:system-ui,sans-serif;font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.18);background:#efe4d0;background-image:repeating-linear-gradient(45deg,#0000 0 3px,#00000008 3px 4px);color:#4a3526}
+.scroll{position:absolute;inset:0 0 70px 0;padding:22px 14px 8px;overflow:hidden}
+.hello{font-family:Georgia,serif;font-size:20px;margin:0 0 2px}
+.sub{font-size:11px;opacity:.7;margin-bottom:10px}
+/* semana: botões de costura */
+.week{display:flex;justify-content:space-between;margin-bottom:12px}
+.day{width:34px;text-align:center;font-size:9.5px}
+.day i{display:block;width:30px;height:30px;margin:2px auto 0;border-radius:50%;font-style:normal;font-weight:700;line-height:30px;font-size:12px;background:radial-gradient(circle at 38% 38%,#f5ede0,#d9c9ad);box-shadow:inset 0 0 0 2px #c9b58f,0 1px 2px #0004}
+.day.today i{background:radial-gradient(circle at 38% 38%,#e08a4e,#b8541c);box-shadow:inset 0 0 0 2px #f3b385,0 1px 3px #0006;color:#fff}
+.day.ho i{background:radial-gradient(circle at 38% 38%,#7fc4bd,#2f7f7a);box-shadow:inset 0 0 0 2px #a9ddd7;color:#fff;font-size:13px}
+.tapewrap{display:flex;gap:8px}
+.tape{width:26px;flex:none;border-radius:3px;background:#f3d977;background-image:repeating-linear-gradient(#0000 0 9px,#7a5a1e 9px 10px);box-shadow:inset 0 0 0 1px #c9a43c;font-size:9px;font-weight:700;color:#5a4210;text-align:center;padding-top:6px;line-height:56px}
+.tape span{display:block;height:56px}
+.tags{flex:1;display:flex;flex-direction:column;gap:9px}
+.tag{position:relative;background:#fffaf0;padding:9px 10px 9px 24px;clip-path:polygon(16px 0,100% 0,100% 100%,16px 100%,0 50%)}
+.tag::before{content:"";position:absolute;left:8px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:#efe4d0;box-shadow:inset 0 0 0 1px #b9a27f}
+.tag::after{content:"";position:absolute;inset:3px 3px 3px 17px;border:1.5px dashed #c9733a;border-radius:3px;pointer-events:none}
+.tag b{display:block}.tag small{opacity:.7}
+.tag.go::after{border-color:#2f7f7a}
+.tag.ghost{opacity:.45}
+/* post-it dentro do mundo do ateliê */
+.postit{position:relative;margin-top:14px;background:#fff3a8;padding:12px 10px 8px;border-radius:2px 2px 8px 2px;box-shadow:0 3px 6px #0002;transform:rotate(-1.5deg);font-family:"Segoe Script","Bradley Hand","Comic Sans MS",cursive;font-size:12px}
+.postit::before{content:"";position:absolute;top:-8px;left:28%;width:64px;height:15px;transform:rotate(-3deg);background:repeating-linear-gradient(45deg,#ffffffaa 0 5px,#ffffff44 5px 10px);background-color:#7fc4bd;box-shadow:0 1px 2px #0002}
+.postit small{font-family:system-ui,sans-serif;font-size:10px;opacity:.65;display:block}
+.bar{position:absolute;left:0;right:0;bottom:0;height:70px;background:#4a3526;display:flex;justify-content:space-around;align-items:center;color:#efe4d0;font-size:10px;text-align:center;padding-top:12px;clip-path:polygon(0 12px,4% 0,8% 12px,12% 0,16% 12px,20% 0,24% 12px,28% 0,32% 12px,36% 0,40% 12px,44% 0,48% 12px,52% 0,56% 12px,60% 0,64% 12px,68% 0,72% 12px,76% 0,80% 12px,84% 0,88% 12px,92% 0,96% 12px,100% 0,100% 100%,0 100%)}
+.btn{display:inline-block;width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 38% 38%,#f5ede0,#d9c9ad);box-shadow:inset 0 0 0 2px #c9b58f,0 1px 2px #0004;position:relative;margin-bottom:2px}
+.btn::before{content:"";position:absolute;left:8px;top:8px;width:3px;height:3px;border-radius:50%;background:#4a3526;box-shadow:7px 0 #4a3526,0 7px #4a3526,7px 7px #4a3526}
+.btn.big{width:46px;height:46px;margin-top:-26px;background:radial-gradient(circle at 38% 38%,#e08a4e,#b8541c);box-shadow:inset 0 0 0 3px #f3b385,0 3px 6px #0006;color:#fff;font-size:26px;line-height:46px;text-align:center}
+.btn.big::before{display:none}
+.btn.on{background:radial-gradient(circle at 38% 38%,#7fc4bd,#2f7f7a);box-shadow:inset 0 0 0 2px #a9ddd7}
+/* folha de escolha do dia */
+.sheet{position:absolute;left:0;right:0;bottom:70px;background:#fffaf0;border-radius:22px 22px 0 0;padding:14px 14px 12px;box-shadow:0 -6px 16px #0004}
+.sheet::before{content:"";position:absolute;left:50%;top:6px;width:36px;height:4px;margin-left:-18px;border-radius:2px;background:#cdbb9c}
+.sheet h4{margin:8px 0 8px;font-family:Georgia,serif;font-size:14px}
+.opt{display:flex;gap:8px;align-items:center;padding:9px 10px;margin-bottom:7px;border-radius:12px;border:1.5px dashed #b9a27f;font-size:12px}
+.opt.sel{border-color:#2f7f7a;background:#e3f2f0}
+.dim{position:absolute;inset:0 0 70px 0;background:#0003}
+.banner{background:#2f7f7a;color:#fff;border-radius:14px;padding:10px 12px;margin-bottom:12px;position:relative}
+.banner::after{content:"";position:absolute;inset:3px;border:1.5px dashed #ffffff88;border-radius:11px;pointer-events:none}
+.banner b{font-family:Georgia,serif;font-size:14px;display:block}
+.legend{font-size:11.5px;line-height:1.45;margin-top:10px}
+</style>
+
+<h2>Mistura: Ateliê + post-its, e o dia de home office</h2>
+<p class="subtitle">Base do modelo A. Os post-its entram como as anotações soltas dela. Textos e horários são exemplos meus.</p>
+
+<div class="row">
+
+<div class="col">
+  <h3>1 · Escolher como vai ser o dia</h3>
+  <p class="why">Ela marca o home office quando souber, em qualquer dia da semana.</p>
+  <div class="phone">
+    <div class="scroll">
+      <p class="hello">Agenda</p>
+      <div class="sub">semana de 9 a 13 de novembro</div>
+      <div class="week">
+        <div class="day today">seg<i>9</i></div>
+        <div class="day">ter<i>10</i></div>
+        <div class="day">qua<i>11</i></div>
+        <div class="day ho">qui<i>🏠</i></div>
+        <div class="day">sex<i>13</i></div>
+      </div>
+      <div class="tag go" style="margin-bottom:9px"><b>Quinta · Home office</b><small>sem trajeto</small></div>
+      <div class="tag"><b>Terça · Fechamento da folha</b><small>corte às 17h</small></div>
+    </div>
+    <div class="dim"></div>
+    <div class="sheet">
+      <h4>Como vai ser a quarta, dia 11?</h4>
+      <div class="opt">🚌 <b>Presencial</b> <small style="margin-left:auto">com trajeto</small></div>
+      <div class="opt sel">🏠 <b>Home office</b> <small style="margin-left:auto">sem trajeto</small></div>
+    </div>
+    <div class="bar">
+      <div><span class="btn"></span><br>Hoje</div>
+      <div><span class="btn on"></span><br>Agenda</div>
+      <div><span class="btn big">+</span></div>
+      <div><span class="btn"></span><br>Tarefas</div>
+      <div><span class="btn"></span><br>Eu</div>
+    </div>
+  </div>
+  <div class="legend"><b>Como funciona:</b> toca no botão do dia, escolhe "Presencial" ou "Home office". Também dá para trocar direto na tela Hoje, no próprio dia.</div>
+</div>
+
+<div class="col">
+  <h3>2 · Hoje, num dia de home office</h3>
+  <p class="why">O trajeto some, o dia começa mais tarde e o app avisa que há mais tempo livre.</p>
+  <div class="phone">
+    <div class="scroll">
+      <p class="hello">Bom dia, [nome]</p>
+      <div class="sub">quinta, 12 de novembro</div>
+      <div class="week">
+        <div class="day">seg<i>9</i></div>
+        <div class="day">ter<i>10</i></div>
+        <div class="day">qua<i>11</i></div>
+        <div class="day ho today">qui<i>🏠</i></div>
+        <div class="day">sex<i>13</i></div>
+      </div>
+      <div class="banner"><b>Home office hoje</b>Sem trajeto: as manhãs ficam livres.</div>
+      <div class="tapewrap">
+        <div class="tape"><span>8</span><span>9</span><span>10</span></div>
+        <div class="tags">
+          <div class="tag go"><b>Lançar atestados</b><small>Fechamento · 40 min</small></div>
+          <div class="tag"><b>Conferir folha</b><small>Fechamento · 1h</small></div>
+        </div>
+      </div>
+      <div class="postit">ligar pro contador<small>anotação solta · hoje</small></div>
+    </div>
+    <div class="bar">
+      <div><span class="btn on"></span><br>Hoje</div>
+      <div><span class="btn"></span><br>Agenda</div>
+      <div><span class="btn big">+</span></div>
+      <div><span class="btn"></span><br>Tarefas</div>
+      <div><span class="btn"></span><br>Eu</div>
+    </div>
+  </div>
+  <div class="legend"><b>Regra da mistura (minha ideia):</b> <b>etiquetas de tecido</b> são tarefas e horários na fita. <b>Post-its</b> são as anotações rápidas e soltas, o que a agendinha de papel fazia.</div>
+</div>
+
+</div>

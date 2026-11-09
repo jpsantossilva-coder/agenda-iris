@@ -1,0 +1,170 @@
+<style>
+.row{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;align-items:flex-start}
+.col{width:290px;cursor:pointer}
+.col h3{margin:0 0 2px}
+.col .why{font-size:12px;opacity:.75;margin:0 0 10px;min-height:48px}
+.phone{width:270px;height:560px;border:6px solid #15151a;border-radius:36px;overflow:hidden;position:relative;font-family:system-ui,sans-serif;font-size:12.5px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.phone .scroll{position:absolute;inset:0 0 70px 0;padding:22px 14px 8px;overflow:hidden}
+.phone .bar{position:absolute;left:0;right:0;bottom:0;height:70px}
+/* ===== A: Ateliê ===== */
+.A{background:#efe4d0;background-image:repeating-linear-gradient(45deg,#0000 0 3px,#00000008 3px 4px);color:#4a3526}
+.A .hello{font-family:Georgia,serif;font-size:20px;margin:0 0 2px}
+.A .sub{font-size:11px;opacity:.7;margin-bottom:12px}
+.A .tapewrap{display:flex;gap:8px}
+.A .tape{width:26px;flex:none;border-radius:3px;background:#f3d977;background-image:repeating-linear-gradient(#0000 0 9px,#7a5a1e 9px 10px);box-shadow:inset 0 0 0 1px #c9a43c;font-size:9px;font-weight:700;color:#5a4210;text-align:center;padding-top:6px;line-height:56px}
+.A .tape span{display:block;height:56px}
+.A .tags{flex:1;display:flex;flex-direction:column;gap:9px}
+.A .tag{position:relative;background:#fffaf0;padding:9px 10px 9px 24px;clip-path:polygon(16px 0,100% 0,100% 100%,16px 100%,0 50%)}
+.A .tag::before{content:"";position:absolute;left:8px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:#efe4d0;box-shadow:inset 0 0 0 1px #b9a27f}
+.A .tag::after{content:"";position:absolute;inset:3px 3px 3px 17px;border:1.5px dashed #c9733a;border-radius:3px;pointer-events:none}
+.A .tag b{display:block;font-size:12.5px}
+.A .tag small{opacity:.7}
+.A .tag.go::after{border-color:#2f7f7a}
+.A .tag.dim{opacity:.7}
+.A .thread{height:30px;margin:12px 0 0;border-radius:8px;background:#fffaf0;position:relative;padding:7px 10px;font-size:11px}
+.A .thread::after{content:"";position:absolute;inset:3px;border:1.5px dashed #b9a27f;border-radius:6px}
+.A .bar{background:#4a3526;display:flex;justify-content:space-around;align-items:center;color:#efe4d0;font-size:10px;text-align:center;clip-path:polygon(0 12px,4% 0,8% 12px,12% 0,16% 12px,20% 0,24% 12px,28% 0,32% 12px,36% 0,40% 12px,44% 0,48% 12px,52% 0,56% 12px,60% 0,64% 12px,68% 0,72% 12px,76% 0,80% 12px,84% 0,88% 12px,92% 0,96% 12px,100% 0,100% 100%,0 100%);padding-top:12px}
+.btn{display:inline-block;width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 38% 38%,#f5ede0,#d9c9ad);box-shadow:inset 0 0 0 2px #c9b58f,0 1px 2px #0004;position:relative;margin-bottom:2px}
+.btn::before{content:"";position:absolute;left:8px;top:8px;width:3px;height:3px;border-radius:50%;background:#4a3526;box-shadow:7px 0 #4a3526,0 7px #4a3526,7px 7px #4a3526}
+.btn.big{width:46px;height:46px;margin-top:-26px;background:radial-gradient(circle at 38% 38%,#e08a4e,#b8541c);box-shadow:inset 0 0 0 3px #f3b385,0 3px 6px #0006;color:#fff;font-size:26px;line-height:46px;text-align:center}
+.btn.big::before{display:none}
+.btn.on{background:radial-gradient(circle at 38% 38%,#7fc4bd,#2f7f7a);box-shadow:inset 0 0 0 2px #a9ddd7}
+/* ===== B: Agendinha ===== */
+.B{background:#fbf4e4;background-image:repeating-linear-gradient(#0000 0 23px,#9cc0d655 23px 24px);color:#3a3a4a}
+.B .rings{position:absolute;left:5px;top:0;bottom:0;width:10px;background:radial-gradient(circle,#15151a 0 3px,#0000 4px) 0 0/10px 34px;z-index:2}
+.B .scroll{padding-left:26px}
+.B .hello{font-family:"Segoe Script","Bradley Hand","Comic Sans MS",cursive;font-size:19px;margin:0 0 8px;color:#b5476b}
+.B .note{position:relative;padding:12px 10px 9px;margin:0 0 14px;border-radius:2px 2px 8px 2px;box-shadow:0 3px 6px #0002;font-family:"Segoe Script","Bradley Hand","Comic Sans MS",cursive;font-size:12px}
+.B .note::before{content:"";position:absolute;top:-8px;left:30%;width:70px;height:16px;transform:rotate(-3deg);background:repeating-linear-gradient(45deg,#ffffffaa 0 5px,#ffffff44 5px 10px);box-shadow:0 1px 2px #0002}
+.B .n1{background:#fff3a8;transform:rotate(-1.2deg)} .B .n1::before{background-color:#f2a7c3}
+.B .n2{background:#c9ecd6;transform:rotate(.9deg)} .B .n2::before{background-color:#9fd1e8}
+.B .n3{background:#f9d4c8;transform:rotate(-.6deg)} .B .n3::before{background-color:#f6e08c}
+.B .note small{font-family:system-ui,sans-serif;font-size:10.5px;opacity:.7;display:block;margin-top:2px}
+.B .stamp{position:absolute;right:8px;top:8px;width:28px;height:28px;border:2px solid #b5476b;border-radius:50%;transform:rotate(-14deg);color:#b5476b;font:700 9px/24px system-ui;text-align:center;opacity:.85}
+.B .bar{background:#fbf4e4;border-top:2px solid #15151a22}
+.B .tabs{position:absolute;left:16px;right:6px;bottom:0;display:flex;gap:5px;align-items:flex-end;height:48px}
+.B .tabs div{flex:1;text-align:center;font-size:10px;padding:8px 0 6px;border-radius:10px 10px 0 0;font-weight:600;color:#3a3a4a}
+.B .pen{position:absolute;right:12px;top:-30px;width:46px;height:46px;border-radius:50%;background:#b5476b;color:#fff;font-size:24px;line-height:44px;text-align:center;box-shadow:0 3px 8px #0004}
+/* ===== C: Rota ===== */
+.C{background:#e9f0ee;color:#12302f}
+.C .hello{font-family:Georgia,serif;font-size:22px;margin:0 0 10px}
+.C .now{background:#0d3d3b;color:#e8fffb;border-radius:18px;padding:13px 14px;margin-bottom:14px}
+.C .now .l{font-size:9.5px;letter-spacing:.1em;opacity:.7}
+.C .now .t{font-family:Georgia,serif;font-size:17px;margin:3px 0 8px}
+.C .meter{height:6px;border-radius:3px;background:#ffffff30;position:relative}
+.C .meter i{position:absolute;left:0;top:0;bottom:0;width:62%;border-radius:3px;background:#5fd6c8}
+.C .meter i::after{content:"🚆";position:absolute;right:-9px;top:-9px;font-size:13px}
+.C .line{position:relative;padding-left:78px}
+.C .line::before{content:"";position:absolute;left:62px;top:6px;bottom:6px;width:5px;border-radius:3px;background:repeating-linear-gradient(#2a9d90 0 12px,#e9f0ee 12px 16px)}
+.C .stop{position:relative;margin-bottom:13px;min-height:30px}
+.C .stop .h{position:absolute;left:-78px;width:50px;text-align:right;font-weight:700;font-size:11px;padding-top:3px}
+.C .stop::before{content:"";position:absolute;left:-20px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid #0d3d3b}
+.C .stop.w::before{border-color:#c0643a}
+.C .ticket{display:block;background:#fff;padding:7px 12px;border-radius:8px;font-size:12px;-webkit-mask:radial-gradient(circle 6px at 0 50%,#0000 97%,#000) left/52% 100% no-repeat,radial-gradient(circle 6px at 100% 50%,#0000 97%,#000) right/52% 100% no-repeat;mask:radial-gradient(circle 6px at 0 50%,#0000 97%,#000) left/52% 100% no-repeat,radial-gradient(circle 6px at 100% 50%,#0000 97%,#000) right/52% 100% no-repeat;border-left:0}
+.C .ticket small{opacity:.65;display:block}
+.C .fold{font-size:10.5px;opacity:.65;margin:-3px 0 12px}
+.C .bar{background:none}
+.C .pill{position:absolute;left:12px;right:12px;bottom:12px;height:50px;border-radius:25px;background:#0d3d3b;display:flex;justify-content:space-around;align-items:center;color:#cfeee9;font-size:9.5px;text-align:center}
+.C .plus{width:44px;height:44px;margin-top:-30px;background:#e5a14a;color:#2a1a05;font-size:24px;line-height:44px;border-radius:12px;transform:rotate(-8deg);box-shadow:0 3px 8px #0005,inset 6px 0 0 -3px #0d3d3b,inset -6px 0 0 -3px #0d3d3b;border:2px dashed #2a1a05}
+.legend{font-size:11.5px;line-height:1.45;margin-top:10px}
+</style>
+
+<h2>3 modelos para o app dela (tela Hoje)</h2>
+<p class="subtitle">Mesma estrutura nos três (barra de baixo, "+" no centro, mesmas abas). O que muda é o jeito e a interação. Os textos são exemplos meus.</p>
+
+<div class="row">
+
+<!-- ================= A ================= -->
+<div class="col" data-choice="a" onclick="toggleSelect(this)">
+  <h3>A · Ateliê</h3>
+  <p class="why">Ligado à costura dela. Dia numa fita métrica, tarefas em etiquetas de tecido, abas em botões.</p>
+  <div class="phone A">
+    <div class="scroll">
+      <p class="hello">Bom dia, [nome]</p>
+      <div class="sub">segunda, 9 de novembro · fechamento em 3 dias</div>
+      <div class="tapewrap">
+        <div class="tape"><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span></div>
+        <div class="tags">
+          <div class="tag dim"><b>Uber → Prio</b><small>~1h30 · no trajeto</small></div>
+          <div class="tag go"><b>Lançar atestados</b><small>Fechamento · 40 min</small></div>
+          <div class="tag"><b>Conferir folha</b><small>Fechamento · 1h</small></div>
+          <div class="tag dim"><b>Almoço</b><small>45 min · descanso</small></div>
+        </div>
+      </div>
+      <div class="thread">Hoje: 2h de trabalho · 1h livre</div>
+    </div>
+    <div class="bar">
+      <div><span class="btn on"></span><br>Hoje</div>
+      <div><span class="btn"></span><br>Agenda</div>
+      <div><span class="btn big">+</span></div>
+      <div><span class="btn"></span><br>Tarefas</div>
+      <div><span class="btn"></span><br>Eu</div>
+    </div>
+  </div>
+  <div class="legend"><b>Interação:</b> ao concluir, um fio de costura "fecha" a etiqueta, que pende de lado. Barra com serrilha, como o corte de tecido.</div>
+</div>
+
+<!-- ================= B ================= -->
+<div class="col" data-choice="b" onclick="toggleSelect(this)">
+  <h3>B · Agendinha</h3>
+  <p class="why">Ligado à agenda de papel que ela já usa. Post-its com fita adesiva, caderno com argolas, abas de fichário.</p>
+  <div class="phone B">
+    <div class="rings"></div>
+    <div class="scroll">
+      <p class="hello">Bom dia, [nome] ♡</p>
+      <div class="note n1">Uber → Prio<small>chega 9:00 · dá pra adiantar e-mails</small></div>
+      <div class="note n2">Lançar atestados<small>fechamento · 40 min</small><div class="stamp">FEITO</div></div>
+      <div class="note n3">Conferir folha<small>fechamento · 1h</small></div>
+      <div class="note n1" style="margin-bottom:0">Almoço sem pensar em nada<small>45 min · descanso</small></div>
+    </div>
+    <div class="bar">
+      <div class="pen">✎</div>
+      <div class="tabs">
+        <div style="background:#fff3a8;height:44px">Hoje</div>
+        <div style="background:#f9d4c8">Agenda</div>
+        <div style="background:#c9ecd6">Tarefas</div>
+        <div style="background:#d7e3f4">Eu</div>
+      </div>
+    </div>
+  </div>
+  <div class="legend"><b>Interação:</b> concluir = um carimbo "FEITO" bate no post-it. O "+" é uma caneta que escreve a nota na hora.</div>
+</div>
+
+<!-- ================= C ================= -->
+<div class="col" data-choice="c" onclick="toggleSelect(this)">
+  <h3>C · Rota do dia</h3>
+  <p class="why">Ligado ao trajeto longo dela. O dia é uma linha de metrô com paradas. Parente do "Metas" (verde-petróleo e serifa).</p>
+  <div class="phone C">
+    <div class="scroll">
+      <p class="hello">Bom dia, [nome]</p>
+      <div class="now">
+        <div class="l">AGORA · NO UBER</div>
+        <div class="t">Chegando na Prio às 9:00</div>
+        <div class="meter"><i></i></div>
+      </div>
+      <div class="line">
+        <div class="stop"><span class="h">9:00</span><span class="ticket"><b>Lançar atestados</b><small>Fechamento · 40 min</small></span></div>
+        <div class="fold">· · · 2 paradas leves até o almoço</div>
+        <div class="stop w"><span class="h">12:30</span><span class="ticket"><b>Almoço</b><small>45 min · descanso</small></span></div>
+        <div class="stop"><span class="h">19:00</span><span class="ticket"><b>Volta pra casa</b><small>~2h30 · leitura no trajeto</small></span></div>
+      </div>
+    </div>
+    <div class="bar">
+      <div class="pill">
+        <div>🏠<br>Hoje</div><div>📅<br>Agenda</div><div class="plus">+</div><div>✅<br>Tarefas</div><div>👤<br>Eu</div>
+      </div>
+    </div>
+  </div>
+  <div class="legend"><b>Interação:</b> o trenzinho anda na linha conforme o horário. O "+" é um bilhete de metrô com furinhos nas laterais.</div>
+</div>
+
+</div>
+
+<div class="section" style="margin-top:22px">
+  <h3>De onde veio cada ideia (só a ideia, nada copiado)</h3>
+  <ul>
+    <li><b>A:</b> um estudo de caso de app de curso de costura (paleta de moodboard de tecidos) e a coleção de barras de progresso criativas da Hongkiat, que inspirou a fita métrica no lugar da barra comum.</li>
+    <li><b>B:</b> o app Paper Planner (visual de agenda de papel) e o uso de washi tape para marcar blocos de tempo e cores, de uma página da Erin Condren.</li>
+    <li><b>C:</b> um estudo de caso de app de ônibus (horário à esquerda, trajeto em linha com paradas) e um app de trem que dobra as paradas do meio em uma linha só, como o "2 paradas leves".</li>
+  </ul>
+</div>
